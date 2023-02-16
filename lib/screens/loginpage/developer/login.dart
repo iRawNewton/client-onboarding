@@ -1,7 +1,6 @@
+import 'package:client_onboarding_app/screens/navigation/developer/dev_navigation.dart';
 import 'package:client_onboarding_app/screens/signup/developer/signup.dart';
 import 'package:flutter/material.dart';
-
-import '../../navigation/developer/dev_navigation.dart';
 
 class MyLogin extends StatefulWidget {
   const MyLogin({super.key});
@@ -11,6 +10,9 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -55,11 +57,11 @@ class _MyLoginState extends State<MyLogin> {
                         color: Colors.grey[200],
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 10.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
-                        // controller: _email,
-                        decoration: InputDecoration(
+                        controller: emailController,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Email',
                         ),
@@ -76,11 +78,11 @@ class _MyLoginState extends State<MyLogin> {
                         color: Colors.grey[200],
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 10.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
-                        // controller: _email,
-                        decoration: InputDecoration(
+                        controller: passwordController,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Password',
                         ),
@@ -103,21 +105,16 @@ class _MyLoginState extends State<MyLogin> {
                     child: const Text('Forgot Password?'),
                   ),
                 ),
-
                 // login button
                 SizedBox(
-                  // width: MediaQuery.of(context).size.width * 0.75,
                   width: double.infinity,
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {
-                      // MyDevDashboard
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyDevNav(),
-                        ),
-                      );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyDevNav()));
                     },
                     style: const ButtonStyle(
                         backgroundColor:
