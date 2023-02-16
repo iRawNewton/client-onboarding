@@ -22,8 +22,7 @@ class _MyUsersState extends State<MyUsers> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.25,
+                Container(
                   child: Lottie.network(
                       'https://assets1.lottiefiles.com/packages/lf20_1pxqjqps.json'),
                 ),

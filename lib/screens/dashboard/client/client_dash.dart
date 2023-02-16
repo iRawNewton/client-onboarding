@@ -73,8 +73,8 @@ class _MyClientDashboardState extends State<MyClientDashboard> {
               ),
               // project logo
               Container(
-                padding: EdgeInsets.symmetric(vertical: 30),
-                decoration: BoxDecoration(color: Colors.transparent),
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                decoration: const BoxDecoration(color: Colors.transparent),
                 child: Image.network(
                   'https://kyptronix.us/images/webp/logo.webp',
                 ),
