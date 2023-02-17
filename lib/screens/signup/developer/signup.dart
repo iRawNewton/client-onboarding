@@ -1,9 +1,11 @@
 import 'package:client_onboarding_app/screens/loginpage/developer/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MySignUp extends StatefulWidget {
-  const MySignUp({super.key});
+  final VoidCallback showLoginPage;
+  const MySignUp({super.key, required this.showLoginPage});
 
   @override
   State<MySignUp> createState() => _MySignUpState();
@@ -16,6 +18,23 @@ class _MySignUpState extends State<MySignUp> {
   void initState() {
     isVisible = true;
     super.initState();
+  }
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future signUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
   }
 
   @override
@@ -227,12 +246,7 @@ class _MySignUpState extends State<MySignUp> {
                     height: 40.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MyLogin(),
-                          ),
-                        );
+                        widget.showLoginPage;
                       },
                       style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Colors.black),
@@ -250,12 +264,12 @@ class _MySignUpState extends State<MySignUp> {
                     height: 40.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MyLogin(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const MyLogin(),
+                        //   ),
+                        // );
                       },
                       style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Colors.black),

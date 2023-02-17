@@ -39,6 +39,9 @@ dependencies:
   lottie: ^2.2.0
   step_progress_indicator: ^1.0.2
   firebase_core: ^2.5.0
+  firebase_auth: ^4.2.7
+  mysql1: ^0.20.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

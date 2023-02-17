@@ -1,3 +1,4 @@
+import 'package:client_onboarding_app/screens/loginauth/developer/devauth.dart';
 import 'package:client_onboarding_app/screens/loginpage/client/login.dart';
 import 'package:client_onboarding_app/screens/loginpage/developer/login.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,7 @@ class _MyUsersState extends State<MyUsers> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MyLogin(),
+                        builder: (context) => const MyDevAuthPage(),
                       ),
                     );
                   },

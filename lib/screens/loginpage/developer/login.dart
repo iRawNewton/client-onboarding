@@ -1,9 +1,11 @@
 import 'package:client_onboarding_app/screens/navigation/developer/dev_navigation.dart';
 import 'package:client_onboarding_app/screens/signup/developer/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyLogin extends StatefulWidget {
-  const MyLogin({super.key});
+  final VoidCallback showRegisterPage;
+  const MyLogin({super.key, required this.showRegisterPage});
 
   @override
   State<MyLogin> createState() => _MyLoginState();
@@ -12,6 +14,20 @@ class MyLogin extends StatefulWidget {
 class _MyLoginState extends State<MyLogin> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,12 +111,12 @@ class _MyLoginState extends State<MyLogin> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MySignUp(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const MySignUp(),
+                      //   ),
+                      // );
                     },
                     child: const Text('Forgot Password?'),
                   ),
@@ -128,12 +144,7 @@ class _MyLoginState extends State<MyLogin> {
                     const Text('Not a member?'),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MySignUp(),
-                          ),
-                        );
+                        widget.showRegisterPage;
                       },
                       child: const Text('Register Now'),
                     )

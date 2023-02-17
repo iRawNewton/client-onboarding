@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'screens/homescreen/homescreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'screens/test/test.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const MyUsers(),
+      home: const MyTestScreen(),
     );
   }
 }

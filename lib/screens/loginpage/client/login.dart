@@ -106,12 +106,12 @@ class _MyClientLoginState extends State<MyClientLogin> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MySignUp(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const MySignUp(),
+                      //   ),
+                      // );
                     },
                     child: Text(
                       'Forgot Password?',
