@@ -4,6 +4,8 @@ import 'package:client_onboarding_app/screens/loginpage/developer/login.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../assigntask/pm/assign_task.dart';
+
 class MyUsers extends StatefulWidget {
   const MyUsers({super.key});
 
@@ -34,7 +36,13 @@ class _MyUsersState extends State<MyUsers> {
                   child: Row(
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MyPmAssignTask()));
+                        },
                         child: Column(
                           children: [
                             CircleAvatar(
