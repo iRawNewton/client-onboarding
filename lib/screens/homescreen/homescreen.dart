@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import '../assigntask/pm/assign_task.dart';
+import '../navigation/pm/pm_navigation.dart';
 
 class MyUsers extends StatefulWidget {
   const MyUsers({super.key});
@@ -41,7 +42,7 @@ class _MyUsersState extends State<MyUsers> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const MyPmAssignTask()));
+                                      const MyPmNavigation()));
                         },
                         child: Column(
                           children: [
