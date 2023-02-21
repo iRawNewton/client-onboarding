@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,7 +12,7 @@ class _MyPmAssignTaskState extends State<MyPmAssignTask> {
   var maxlengthline = 10;
   var url = 'http://10.0.2.2:80/FlutterApi/post.php';
 
-  final cliId_ = TextEditingController();
+  final cliId = TextEditingController();
   final cliPass = TextEditingController();
   final cliName = TextEditingController();
   final cliEmail = TextEditingController();
@@ -23,59 +21,41 @@ class _MyPmAssignTaskState extends State<MyPmAssignTask> {
   final cliProjectDesc = TextEditingController();
   dynamic data;
 
-  Future<void> postOrderDetails() async {
-    // var body = jsonEncode({
-    //   'cli_id': cliId.text.trim(),
-    //   'cli_pass': cliPass.text.trim(),
-    //   'cli_name': cliName.text.trim(),
-    //   'cli_email': cliEmail.text.trim(),
-    //   'cli_phone': cliPhone.text.trim(),
-    //   'cli_project_name': cliProjectName.text.trim(),
-    //   'cli_project_desc': cliProjectDesc.text.trim()
-    // });
-
-    // var body_ = jsonEncode(
-    //     {'cli_id': cliId.text.trim(), 'cli_pass': cliPass.text.trim()});
-
-    final Map<String, dynamic> postdata = {'cli_id': 1001};
-
-    final response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/post.php'),
-        body: jsonEncode(postdata));
+  postData(context) async {
+    var response = await http
+        .post(Uri.parse('http://10.0.2.2:80/FlutterApi/post.php'), body: {
+      'cli_id': cliId.text,
+      'cli_pass': cliPass.text,
+      'cli_name': cliName.text,
+      'cli_email': cliEmail.text,
+      'cli_phone': cliPhone.text,
+      'cli_project_name': cliProjectName.text,
+      'cli_project_desc': cliProjectDesc.text,
+    });
     if (response.statusCode == 200) {
-      print('successfull');
-      print(response.statusCode);
-      // data = jsonDecode(response.body.toString());
+      cliId.clear();
+      cliPass.clear();
+      cliName.clear();
+      cliEmail.clear();
+      cliPhone.clear();
+      cliProjectName.clear();
+      cliProjectDesc.clear();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text('Success!'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Error!'),
+        ),
+      );
     }
   }
-
-  // ***************************************
-  TextEditingController cliId = TextEditingController();
-  String _response = '';
-
-  Future<void> _sendRequest() async {
-    String url = 'http://10.0.2.2:80/FlutterApi/post.php';
-    // String body = cliId.text;
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-    };
-
-    var statusUpdate = {
-      'cli_id': '1002',
-    };
-    String jsonStr = jsonEncode(statusUpdate);
-
-    http.Response response = await http.post(
-      Uri.parse(url),
-      headers: headers,
-      body: jsonStr,
-    );
-    setState(() {
-      _response = response.body;
-    });
-    print(response.statusCode);
-  }
-  // ***************************************
 
   @override
   void dispose() {
@@ -88,8 +68,6 @@ class _MyPmAssignTaskState extends State<MyPmAssignTask> {
     cliProjectDesc.dispose();
     super.dispose();
   }
-
-// cli_id	cli_pass	cli_name	cli_email	cli_phone	cli_project_name	cli_project_desc
 
   @override
   Widget build(BuildContext context) {
@@ -244,7 +222,7 @@ class _MyPmAssignTaskState extends State<MyPmAssignTask> {
               const SizedBox(height: 10.0),
               ElevatedButton(
                 onPressed: () {
-                  _sendRequest();
+                  postData(context);
                 },
                 child: const Text('save data'),
               ),
