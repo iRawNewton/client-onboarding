@@ -37,9 +37,7 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
     );
   }
 
-  // id	proj_name	proj_desc	proj_startdate	proj_enddate	proj_cli_id	proj_dev_id
   postData(context) async {
-    print(dateControllerStart.text);
     var response = await http.post(
         Uri.parse('http://10.0.2.2:80/FlutterApi/project/createProject.php'),
         body: {
