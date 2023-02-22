@@ -33,13 +33,13 @@ class _MyPmAssignTaskState extends State<MyPmAssignTask> {
       'cli_project_desc': cliProjectDesc.text,
     });
     if (response.statusCode == 200) {
-      // cliId.clear();
-      // cliPass.clear();
-      // cliName.clear();
-      // cliEmail.clear();
-      // cliPhone.clear();
-      // cliProjectName.clear();
-      // cliProjectDesc.clear();
+      cliId.clear();
+      cliPass.clear();
+      cliName.clear();
+      cliEmail.clear();
+      cliPhone.clear();
+      cliProjectName.clear();
+      cliProjectDesc.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

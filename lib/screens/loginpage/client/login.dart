@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,25 +24,36 @@ class _MyClientLoginState extends State<MyClientLogin> {
     var response = await http.post(
         Uri.parse('http://10.0.2.2:80/FlutterApi/getLogin.php'),
         body: bodyParameter);
-    if (response.statusCode == 200) {
-      print(response.body);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.green,
-          content: Text('Success!'),
-        ),
-      );
-    } else {
+
+    if (response.body == 'Found Nothing') {
+      // List data = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: Colors.red,
           content: Text('Error!'),
         ),
       );
+    } else {
+      List data = jsonDecode(response.body);
+      if (data[0]['cli_userid'] == emailText.text &&
+          data[0]['cli_pass'] == passwordText.text) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.green,
+            content: Text('Success!'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.yellow,
+            content: Text('An error occured. Please report to Dev!'),
+          ),
+        );
+      }
     }
   }
 
-  //
   @override
   Widget build(BuildContext context) {
     return SafeArea(
