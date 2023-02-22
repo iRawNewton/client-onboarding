@@ -1,9 +1,8 @@
 import 'package:client_onboarding_app/screens/dashboard/developer/dev_dash.dart';
-import 'package:client_onboarding_app/screens/loginpage/developer/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../loginpage/developer/login_signup.dart';
+import '../../3loginpage/developer/login_signup.dart';
 
 class MyDevAuthPage extends StatelessWidget {
   const MyDevAuthPage({super.key});

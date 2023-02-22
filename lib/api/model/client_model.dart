@@ -1,4 +1,4 @@
-class client {
+class Client {
   final String cliId;
   final String cliPass;
   final String cliName;
@@ -7,7 +7,7 @@ class client {
   final String cliProjectName;
   final String cliProjectDesc;
 
-  client({
+  Client({
     required this.cliId,
     required this.cliPass,
     required this.cliName,
@@ -17,8 +17,8 @@ class client {
     required this.cliProjectDesc,
   });
 
-  factory client.fromJson(Map<String, dynamic> json) {
-    return client(
+  factory Client.fromJson(Map<String, dynamic> json) {
+    return Client(
       cliId: json['cli_id'],
       cliPass: json['cli_pass'],
       cliName: json['cli_name'],
@@ -28,14 +28,6 @@ class client {
       cliProjectDesc: json['cli_project_desc'],
     );
   }
-
-  // factory Student.fromJson(Map<String, dynamic> json) {
-  //   return Student(
-  //     id: json['id'],
-  //     name: json['name'],
-  //     age: json['age'],
-  //   );
-  // }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

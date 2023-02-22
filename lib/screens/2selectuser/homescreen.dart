@@ -1,10 +1,7 @@
 import 'package:client_onboarding_app/screens/loginauth/developer/devauth.dart';
-import 'package:client_onboarding_app/screens/loginpage/client/login.dart';
-import 'package:client_onboarding_app/screens/loginpage/developer/login.dart';
+import 'package:client_onboarding_app/screens/3loginpage/client/login.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
-import '../assigntask/pm/assign_task.dart';
 import '../navigation/pm/pm_navigation.dart';
 
 class MyUsers extends StatefulWidget {

@@ -14,8 +14,6 @@ class _MyClientLoginState extends State<MyClientLogin> {
   final emailText = TextEditingController();
   final passwordText = TextEditingController();
 
-  var url = 'http://10.0.2.2:80/FlutterApi/getLogin.php';
-  //
   postData(emailText, passwordText, context) async {
     Map<String, String> bodyParameter = {
       'cli_userid': emailText.text,
@@ -26,7 +24,6 @@ class _MyClientLoginState extends State<MyClientLogin> {
         body: bodyParameter);
 
     if (response.body == 'Found Nothing') {
-      // List data = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: Colors.red,

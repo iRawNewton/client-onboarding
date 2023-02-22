@@ -30,7 +30,7 @@ class _MyTestScreenState extends State<MyTestScreen> {
 
     for (var row in results) {
       if (row[0] == 1) {
-        print(results);
+        // print(results);
         // --------------
 
         // // shared prefs

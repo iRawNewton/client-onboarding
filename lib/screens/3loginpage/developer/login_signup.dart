@@ -1,4 +1,4 @@
-import 'package:client_onboarding_app/screens/loginpage/developer/login.dart';
+import 'package:client_onboarding_app/screens/3loginpage/developer/login.dart';
 import 'package:client_onboarding_app/screens/signup/developer/signup.dart';
 import 'package:flutter/material.dart';
 
