@@ -1,37 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
-class MyDevNewUser extends StatefulWidget {
-  const MyDevNewUser({super.key});
+class MyProjectDetails extends StatefulWidget {
+  const MyProjectDetails({super.key});
 
   @override
-  State<MyDevNewUser> createState() => _MyDevNewUserState();
+  State<MyProjectDetails> createState() => _MyProjectDetailsState();
 }
 
-class _MyDevNewUserState extends State<MyDevNewUser> {
-  final username = TextEditingController();
-  final password = TextEditingController();
-  final fullname = TextEditingController();
-  final phone = TextEditingController();
-  final email = TextEditingController();
+class _MyProjectDetailsState extends State<MyProjectDetails> {
+  TextEditingController projectName = TextEditingController();
+  TextEditingController projectDesc = TextEditingController();
+  var dateControllerStart = TextEditingController();
+  var dateControllerEnd = TextEditingController();
+  TextEditingController projectClientID = TextEditingController();
+  TextEditingController projectDevId = TextEditingController();
 
+  DateTime date = DateTime.now();
+
+  void datePickerFunction(dateController) {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2018),
+      lastDate: DateTime(2025),
+    ).then(
+      (value) {
+        setState(() {
+          date = value!;
+          final formatter = DateFormat('dd/MM/yyyy');
+          final formatteddate = formatter.format(date);
+          dateController.text = formatteddate;
+        });
+      },
+    );
+  }
+
+  // id	proj_name	proj_desc	proj_startdate	proj_enddate	proj_cli_id	proj_dev_id
   postData(context) async {
+    print(dateControllerStart.text);
     var response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/dev/createdev.php'),
+        Uri.parse('http://10.0.2.2:80/FlutterApi/project/createProject.php'),
         body: {
-          'cli_username': username.text,
-          'cli_password': password.text,
-          'cli_name': fullname.text,
-          'cli_phone': phone.text,
-          'cli_email': email.text,
+          'proj_name': projectName.text,
+          'proj_desc': projectDesc.text,
+          'proj_startdate': dateControllerStart.text,
+          'proj_enddate': dateControllerEnd.text,
+          'proj_cli_id': projectClientID.text,
+          'proj_dev_id': projectDevId.text,
         });
 
     if (response.statusCode == 200) {
-      username.clear();
-      password.clear();
-      fullname.clear();
-      phone.clear();
-      email.clear();
+      projectName.clear();
+      projectDesc.clear();
+      dateControllerStart.clear();
+      dateControllerEnd.clear();
+      projectClientID.clear();
+      projectDevId.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -48,42 +74,20 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
       );
     }
   }
+  //
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Create New Dev Account'),
-          centerTitle: true,
+          title: const Text('Create Project'),
         ),
         body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
           child: Column(
             children: [
-              // username
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: username,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'User Name',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              // password
-              const SizedBox(height: 15),
+              // project name
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Container(
@@ -95,17 +99,17 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
                     padding: const EdgeInsets.only(left: 10.0),
                     child: TextField(
                       keyboardType: TextInputType.text,
-                      controller: password,
+                      controller: projectName,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Password',
+                        hintText: 'Project Name',
                       ),
                     ),
                   ),
                 ),
               ),
-              // name
-              const SizedBox(height: 15),
+
+              // project description
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Container(
@@ -116,18 +120,18 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: TextField(
-                      keyboardType: TextInputType.name,
-                      controller: fullname,
+                      maxLines: null,
+                      keyboardType: TextInputType.text,
+                      controller: projectDesc,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Full Name',
+                        hintText: 'Project Description',
                       ),
                     ),
                   ),
                 ),
               ),
-              // phone
-              const SizedBox(height: 15),
+              // project start date
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Container(
@@ -138,18 +142,21 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: TextField(
-                      keyboardType: TextInputType.number,
-                      controller: phone,
+                      onTap: () {
+                        datePickerFunction(dateControllerStart);
+                      },
+                      maxLines: null,
+                      keyboardType: TextInputType.none,
+                      controller: dateControllerStart,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Phone Number',
+                        hintText: 'Start date',
                       ),
                     ),
                   ),
                 ),
               ),
-              // email
-              const SizedBox(height: 15),
+              // project end date
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Container(
@@ -160,24 +167,69 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: email,
+                      onTap: () {
+                        datePickerFunction(dateControllerEnd);
+                      },
+                      maxLines: null,
+                      keyboardType: TextInputType.none,
+                      controller: dateControllerEnd,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Email ID',
+                        hintText: 'End date',
                       ),
                     ),
                   ),
                 ),
               ),
-              // elevatedbutton
-              const SizedBox(height: 50),
+              // project cli id
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: TextField(
+                      keyboardType: TextInputType.text,
+                      controller: projectClientID,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Project Client ID',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // project cli dev id
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: TextField(
+                      keyboardType: TextInputType.text,
+                      controller: projectDevId,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Project Dev ID',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 40),
               SizedBox(
-                height: 40.0,
-                width: MediaQuery.of(context).size.width - 100,
+                height: 40,
+                width: MediaQuery.of(context).size.width * 0.75,
                 child: ElevatedButton(
                   onPressed: () {
-                    // postData(context);
+                    postData(context);
                   },
                   child: const Text('Save'),
                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'screens/createuser/developer/createdev.dart';
+import 'screens/project/assign_project.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       // home: const MyUsers(),
-      home: const MyDevNewUser(),
+      home: const MyProjectDetails(),
     );
   }
 }
