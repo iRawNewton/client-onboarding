@@ -1,6 +1,5 @@
-import 'package:client_onboarding_app/screens/navigation/client/client_navigation.dart';
 import 'package:flutter/material.dart';
-import '../../signup/developer/signup.dart';
+import 'package:http/http.dart' as http;
 
 class MyClientLogin extends StatefulWidget {
   const MyClientLogin({super.key});
@@ -9,12 +8,40 @@ class MyClientLogin extends StatefulWidget {
   State<MyClientLogin> createState() => _MyClientLoginState();
 }
 
-//1 bee6ce
-//2 bcffdb
-//3 8dffcd
-//4 68d89b
-//5 4f9d69
 class _MyClientLoginState extends State<MyClientLogin> {
+  dynamic data;
+  final emailText = TextEditingController();
+  final passwordText = TextEditingController();
+
+  var url = 'http://10.0.2.2:80/FlutterApi/getLogin.php';
+  //
+  postData(emailText, passwordText, context) async {
+    Map<String, String> bodyParameter = {
+      'cli_userid': emailText.text,
+      'cli_pass': passwordText.text,
+    };
+    var response = await http.post(
+        Uri.parse('http://10.0.2.2:80/FlutterApi/getLogin.php'),
+        body: bodyParameter);
+    if (response.statusCode == 200) {
+      print(response.body);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text('Success!'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Error!'),
+        ),
+      );
+    }
+  }
+
+  //
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -62,11 +89,11 @@ class _MyClientLoginState extends State<MyClientLogin> {
                         color: Colors.grey[200],
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 10.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
-                        // controller: _email,
-                        decoration: InputDecoration(
+                        controller: emailText,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Email',
                           hintStyle: TextStyle(
@@ -86,11 +113,11 @@ class _MyClientLoginState extends State<MyClientLogin> {
                         color: Colors.grey[200],
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 10.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
-                        // controller: _email,
-                        decoration: InputDecoration(
+                        controller: passwordText,
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Password',
                           hintStyle: TextStyle(
@@ -101,24 +128,7 @@ class _MyClientLoginState extends State<MyClientLogin> {
                     ),
                   ),
                 ),
-                // forgot password
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const MySignUp(),
-                      //   ),
-                      // );
-                    },
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.green.shade900),
-                    ),
-                  ),
-                ),
+                const SizedBox(height: 30),
 
                 // login button
                 SizedBox(
@@ -127,13 +137,14 @@ class _MyClientLoginState extends State<MyClientLogin> {
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {
+                      postData(emailText, passwordText, context);
                       // MyDevDashboard
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyClientNav(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const MyClientNav(),
+                      //   ),
+                      // );
                     },
                     style: const ButtonStyle(
                         backgroundColor:

@@ -24,7 +24,7 @@ class _MyPmAssignTaskState extends State<MyPmAssignTask> {
   postData(context) async {
     var response = await http
         .post(Uri.parse('http://10.0.2.2:80/FlutterApi/post.php'), body: {
-      'cli_id': cliId.text,
+      'cli_userid': cliId.text,
       'cli_pass': cliPass.text,
       'cli_name': cliName.text,
       'cli_email': cliEmail.text,
@@ -33,13 +33,13 @@ class _MyPmAssignTaskState extends State<MyPmAssignTask> {
       'cli_project_desc': cliProjectDesc.text,
     });
     if (response.statusCode == 200) {
-      cliId.clear();
-      cliPass.clear();
-      cliName.clear();
-      cliEmail.clear();
-      cliPhone.clear();
-      cliProjectName.clear();
-      cliProjectDesc.clear();
+      // cliId.clear();
+      // cliPass.clear();
+      // cliName.clear();
+      // cliEmail.clear();
+      // cliPhone.clear();
+      // cliProjectName.clear();
+      // cliProjectDesc.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
