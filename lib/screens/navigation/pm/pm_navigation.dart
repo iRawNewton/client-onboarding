@@ -1,8 +1,6 @@
+import 'package:client_onboarding_app/screens/assignproject/pm/assign_project.dart';
 import 'package:flutter/material.dart';
-import '../../assigntask/developer/assigntask.dart';
-import '../../assigntask/pm/assign_task.dart';
-import '../../daily_task/developer/daily_task.dart';
-import '../../settings/developer/settings.dart';
+import '../../createuser/client/createcli.dart';
 
 class MyPmNavigation extends StatefulWidget {
   const MyPmNavigation({super.key});
@@ -16,10 +14,8 @@ class _MyPmNavigationState extends State<MyPmNavigation> {
   int index = 0;
   // screen lists
   final screens = [
-    const MyPmAssignTask(),
-    const MyDevDailyTask(),
-    const MyDevTaskAssign(),
-    const MyDevSettings()
+    const MyProjectDetails(),
+    const MyPmCreateClient(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -56,17 +52,17 @@ class _MyPmNavigationState extends State<MyPmNavigation> {
                 label: 'Daily Task',
               ),
               // task assigned
-              NavigationDestination(
-                icon: Icon(Icons.assignment_add),
-                selectedIcon: Icon(Icons.assignment_add),
-                label: 'Task Assigned',
-              ),
-              // settings
-              NavigationDestination(
-                icon: Icon(Icons.settings),
-                selectedIcon: Icon(Icons.settings),
-                label: 'Settings',
-              ),
+              // NavigationDestination(
+              //   icon: Icon(Icons.assignment_add),
+              //   selectedIcon: Icon(Icons.assignment_add),
+              //   label: 'Task Assigned',
+              // ),
+              // // settings
+              // NavigationDestination(
+              //   icon: Icon(Icons.settings),
+              //   selectedIcon: Icon(Icons.settings),
+              //   label: 'Settings',
+              // ),
             ]),
       ),
     );

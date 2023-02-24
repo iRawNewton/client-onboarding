@@ -1,7 +1,7 @@
 import 'package:client_onboarding_app/screens/3loginpage/developer/login.dart';
 import 'package:client_onboarding_app/screens/3loginpage/client/login.dart';
+import 'package:client_onboarding_app/screens/3loginpage/pm/login.dart';
 import 'package:flutter/material.dart';
-import '../navigation/pm/pm_navigation.dart';
 
 class MyUsers extends StatefulWidget {
   const MyUsers({super.key});
@@ -37,8 +37,7 @@ class _MyUsersState extends State<MyUsers> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MyPmNavigation()));
+                                  builder: (context) => const MyPmLogin()));
                         },
                         child: Column(
                           children: [

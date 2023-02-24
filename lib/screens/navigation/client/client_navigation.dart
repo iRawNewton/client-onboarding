@@ -1,4 +1,4 @@
-import 'package:client_onboarding_app/screens/assigntask/client/cli_assigntask.dart';
+import 'package:client_onboarding_app/screens/assignproject/client/cli_assigntask.dart';
 import 'package:client_onboarding_app/screens/daily_task/client/cli_daily_task.dart';
 import 'package:client_onboarding_app/screens/dashboard/client/client_dash.dart';
 import 'package:client_onboarding_app/screens/settings/client/cli_settings.dart';

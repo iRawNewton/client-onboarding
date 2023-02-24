@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,13 +26,6 @@ class _MySignUpState extends State<MySignUp> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-  }
-
-  Future signUp() async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-    );
   }
 
   @override
