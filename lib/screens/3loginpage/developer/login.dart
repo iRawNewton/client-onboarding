@@ -1,24 +1,66 @@
-import 'package:client_onboarding_app/screens/navigation/developer/dev_navigation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:client_onboarding_app/screens/dashboard/developer/dev_dash.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class MyLogin extends StatefulWidget {
-  final VoidCallback showRegisterPage;
-  const MyLogin({super.key, required this.showRegisterPage});
+class MyDevLogin extends StatefulWidget {
+  const MyDevLogin({super.key});
 
   @override
-  State<MyLogin> createState() => _MyLoginState();
+  State<MyDevLogin> createState() => _MyDevLoginState();
 }
 
-class _MyLoginState extends State<MyLogin> {
+class _MyDevLoginState extends State<MyDevLogin> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-    );
+  devLoginFunc(emailText, passwordText, context) async {
+    Map<String, String> bodyParameter = {
+      'cli_username': emailController.text,
+      'cli_password': passwordController.text,
+    };
+    var response = await http.post(
+        Uri.parse('http://10.0.2.2:80/FlutterApi/login/devLogin.php'),
+        body: bodyParameter);
+
+    if (response.body == 'Found Nothing') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Error!'),
+        ),
+      );
+    } else {
+      List data = jsonDecode(response.body);
+      if (data[0]['cli_username'] == emailController.text &&
+          data[0]['cli_password'] == passwordController.text) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            duration: Duration(seconds: 1),
+            backgroundColor: Colors.green,
+            content: Text('Success!'),
+          ),
+        );
+        Timer(const Duration(seconds: 1), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MyDevDashboard(),
+            ),
+          );
+        });
+        emailController.clear();
+        passwordController.clear();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.yellow,
+            content: Text('An error occured. Please report to Dev!'),
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -109,14 +151,7 @@ class _MyLoginState extends State<MyLogin> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const MySignUp(),
-                      //   ),
-                      // );
-                    },
+                    onPressed: () {},
                     child: const Text('Forgot Password?'),
                   ),
                 ),
@@ -126,10 +161,8 @@ class _MyLoginState extends State<MyLogin> {
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MyDevNav()));
+                      devLoginFunc(
+                          emailController, passwordController, context);
                     },
                     style: const ButtonStyle(
                         backgroundColor:
@@ -137,18 +170,6 @@ class _MyLoginState extends State<MyLogin> {
                     child: const Text('Login'),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text('Not a member?'),
-                    TextButton(
-                      onPressed: () {
-                        widget.showRegisterPage;
-                      },
-                      child: const Text('Register Now'),
-                    )
-                  ],
-                )
               ],
             ),
           ),

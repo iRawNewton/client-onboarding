@@ -1,7 +1,6 @@
-import 'package:client_onboarding_app/screens/loginauth/developer/devauth.dart';
+import 'package:client_onboarding_app/screens/3loginpage/developer/login.dart';
 import 'package:client_onboarding_app/screens/3loginpage/client/login.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import '../navigation/pm/pm_navigation.dart';
 
 class MyUsers extends StatefulWidget {
@@ -23,10 +22,10 @@ class _MyUsersState extends State<MyUsers> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  child: Lottie.network(
-                      'https://assets1.lottiefiles.com/packages/lf20_1pxqjqps.json'),
-                ),
+                // Container(
+                //   child: Lottie.network(
+                //       'https://assets1.lottiefiles.com/packages/lf20_1pxqjqps.json'),
+                // ),
 
                 // Project Manager
                 Padding(
@@ -127,7 +126,7 @@ class _MyUsersState extends State<MyUsers> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MyDevAuthPage(),
+                        builder: (context) => const MyDevLogin(),
                       ),
                     );
                   },

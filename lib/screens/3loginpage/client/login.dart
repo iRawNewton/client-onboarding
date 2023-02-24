@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:client_onboarding_app/screens/dashboard/developer/dev_dash.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,17 +12,16 @@ class MyClientLogin extends StatefulWidget {
 }
 
 class _MyClientLoginState extends State<MyClientLogin> {
-  dynamic data;
   final emailText = TextEditingController();
   final passwordText = TextEditingController();
 
-  postData(emailText, passwordText, context) async {
+  cliLoginFunc(emailText, passwordText, context) async {
     Map<String, String> bodyParameter = {
       'cli_userid': emailText.text,
       'cli_pass': passwordText.text,
     };
     var response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/getLogin.php'),
+        Uri.parse('http://10.0.2.2:80/FlutterApi/login/cliLogin.php'),
         body: bodyParameter);
 
     if (response.body == 'Found Nothing') {
@@ -36,10 +37,21 @@ class _MyClientLoginState extends State<MyClientLogin> {
           data[0]['cli_pass'] == passwordText.text) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
+            duration: Duration(seconds: 1),
             backgroundColor: Colors.green,
             content: Text('Success!'),
           ),
         );
+        Timer(const Duration(seconds: 1), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MyDevDashboard(),
+            ),
+          );
+        });
+        emailText.clear();
+        passwordText.clear();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -49,6 +61,13 @@ class _MyClientLoginState extends State<MyClientLogin> {
         );
       }
     }
+  }
+
+  @override
+  void dispose() {
+    emailText.dispose();
+    passwordText.dispose();
+    super.dispose();
   }
 
   @override
@@ -146,14 +165,7 @@ class _MyClientLoginState extends State<MyClientLogin> {
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {
-                      postData(emailText, passwordText, context);
-                      // MyDevDashboard
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const MyClientNav(),
-                      //   ),
-                      // );
+                      cliLoginFunc(emailText, passwordText, context);
                     },
                     style: const ButtonStyle(
                         backgroundColor:
