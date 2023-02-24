@@ -1,4 +1,5 @@
 import 'package:client_onboarding_app/screens/assignproject/pm/assign_project.dart';
+import 'package:client_onboarding_app/screens/createuser/developer/createdev.dart';
 import 'package:flutter/material.dart';
 import '../../createuser/client/createcli.dart';
 
@@ -16,6 +17,7 @@ class _MyPmNavigationState extends State<MyPmNavigation> {
   final screens = [
     const MyProjectDetails(),
     const MyPmCreateClient(),
+    const MyDevNewUser()
   ];
   @override
   Widget build(BuildContext context) {
@@ -49,14 +51,14 @@ class _MyPmNavigationState extends State<MyPmNavigation> {
               NavigationDestination(
                 icon: Icon(Icons.assignment),
                 selectedIcon: Icon(Icons.assignment),
-                label: 'Daily Task',
+                label: 'client',
               ),
               // task assigned
-              // NavigationDestination(
-              //   icon: Icon(Icons.assignment_add),
-              //   selectedIcon: Icon(Icons.assignment_add),
-              //   label: 'Task Assigned',
-              // ),
+              NavigationDestination(
+                icon: Icon(Icons.assignment_add),
+                selectedIcon: Icon(Icons.assignment_add),
+                label: 'Developer',
+              ),
               // // settings
               // NavigationDestination(
               //   icon: Icon(Icons.settings),

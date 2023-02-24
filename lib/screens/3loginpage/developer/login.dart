@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:client_onboarding_app/screens/dashboard/developer/dev_dash.dart';
+import 'package:client_onboarding_app/screens/navigation/developer/dev_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -46,7 +46,7 @@ class _MyDevLoginState extends State<MyDevLogin> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const MyDevDashboard(),
+              builder: (context) => const MyDevNav(),
             ),
           );
         });

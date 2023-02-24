@@ -12,12 +12,30 @@ class MyDevTaskAssign extends StatefulWidget {
 
 class _MyDevTaskAssignState extends State<MyDevTaskAssign> {
   dynamic data;
-  Future<void> getOrderDetails() async {
-    final response = await http.get(
-      Uri.parse('http://10.0.2.2:80/FlutterApi/get.php'),
-    );
-    if (response.statusCode == 200) {
-      data = jsonDecode(response.body.toString());
+  TextEditingController devId = TextEditingController();
+
+  devLoginFunc(context) async {
+    Map<String, String> bodyParameter = {
+      // 'proj_dev_id': devId.text,
+      'proj_dev_id': '14',
+    };
+    var response = await http.post(
+        Uri.parse('http://10.0.2.2:80/FlutterApi/login/devLogin.php'),
+        body: bodyParameter);
+
+    if (response.body == 'Found Nothing') {
+    } else {
+      List data = jsonDecode(response.body);
+      if (data[0]['proj_dev_id'] == devId.text) {
+        data = jsonDecode(response.body);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.yellow,
+            content: Text('An error occured. Please report to Dev!'),
+          ),
+        );
+      }
     }
   }
 
@@ -44,7 +62,7 @@ class _MyDevTaskAssignState extends State<MyDevTaskAssign> {
                 ),
               ),
               FutureBuilder(
-                future: getOrderDetails(),
+                future: devLoginFunc(context),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -59,10 +77,12 @@ class _MyDevTaskAssignState extends State<MyDevTaskAssign> {
                           child: Column(
                             children: [
                               ListTile(
-                                leading: Text(data[index]['cli_id']),
-                                title: Text(data[index]['cli_name'].toString()),
-                                trailing:
-                                    Text(data[index]['cli_email'].toString()),
+                                leading: Text(data[index]['id']),
+                                title:
+                                    Text(data[index]['proj_name'].toString()),
+                                subtitle:
+                                    Text(data[index]['proj_desc'].toString()),
+                                trailing: const Icon(Icons.forward),
                               ),
                               // Text(data[index]['name'].toString()),
                             ],
