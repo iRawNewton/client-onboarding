@@ -95,12 +95,10 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
         });
 
     if (response.statusCode == 200) {
-      print('object');
-      print(devID);
-      // dateController.clear();
-      // taskDone.clear();
-      // progressIndicator.clear();
-      // projectID.clear();
+      dateController.clear();
+      taskDone.clear();
+      progressIndicator.clear();
+      projectID.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
