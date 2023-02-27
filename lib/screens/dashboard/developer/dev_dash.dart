@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:client_onboarding_app/screens/2selectuser/homescreen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:http/http.dart' as http;
@@ -21,32 +22,42 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
   }
 
   TextEditingController dateController = TextEditingController();
+  TextEditingController taskDone = TextEditingController();
   TextEditingController projectID = TextEditingController();
+  TextEditingController progressIndicator = TextEditingController();
 
   DateTime selectedDate = DateTime.now();
   double progressValue = 0;
   bool isVisibleButton = true;
   String devName = '';
+  String devID = '';
   List projectList = [];
 
-  void selectDate() {
+  void datePickerFunction(dateController) {
     showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2000),
-            lastDate: DateTime(2050))
-        .then((value) {
-      setState(() {
-        selectedDate = value!;
-      });
-    });
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2018),
+      lastDate: DateTime(2025),
+    ).then(
+      (value) {
+        setState(() {
+          selectedDate = value!;
+          final formatter = DateFormat('dd/MM/yyyy');
+          final formatteddate = formatter.format(selectedDate);
+          dateController.text = formatteddate;
+        });
+      },
+    );
   }
 
   Future getDevName() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? developerID = prefs.getString('devId');
     var developerName = prefs.getString('devname');
     setState(() {
       devName = developerName!;
+      devID = developerID.toString();
     });
   }
 
@@ -70,6 +81,43 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
   }
 
   String? dropdownvalue1;
+
+  // *****************************
+  postData(context) async {
+    var response = await http.post(
+        Uri.parse('http://10.0.2.2:80/FlutterApi/updatetask/dailytask.php'),
+        body: {
+          'cli_date': dateController.text,
+          'cli_task': taskDone.text,
+          'cli_progress': progressIndicator.text,
+          'cli_devid': devID,
+          'cli_projid': projectID.text
+        });
+
+    if (response.statusCode == 200) {
+      print('object');
+      print(devID);
+      // dateController.clear();
+      // taskDone.clear();
+      // progressIndicator.clear();
+      // projectID.clear();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text('Success!'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Error!'),
+        ),
+      );
+    }
+  }
+  // *****************************
 
   @override
   Widget build(BuildContext context) {
@@ -143,13 +191,12 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                       child: TextField(
                         keyboardType: TextInputType.none,
                         controller: dateController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText:
-                              '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                          hintText: 'Working Date',
                         ),
                         onTap: () {
-                          selectDate();
+                          datePickerFunction(dateController);
                         },
                       ),
                     ),
@@ -164,12 +211,12 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                         color: Colors.grey[200],
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 10.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
-                        // controller: _email,
+                        controller: taskDone,
                         maxLines: 10,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Task Done',
                         ),
@@ -180,23 +227,27 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                 const SizedBox(height: 20),
                 // Select project ID
                 // project cli ID
-                DropdownButton(
-                  hint: const Text('Project Title'),
-                  items: projectList.map((item) {
-                    return DropdownMenuItem(
-                      value: item['id'].toString(),
-                      child: Text(item['proj_name'].toString()),
-                    );
-                  }).toList(),
-                  onChanged: (newVal) {
-                    setState(() {
-                      dropdownvalue1 = newVal;
-                      projectID.text = newVal!;
-                    });
-                  },
-                  value: dropdownvalue1,
+                SizedBox(
+                  width: double.infinity,
+                  child: DropdownButton(
+                    isExpanded: true,
+                    hint: const Text('Project Title'),
+                    items: projectList.map((item) {
+                      return DropdownMenuItem(
+                        value: item['id'].toString(),
+                        child: Text(item['proj_name'].toString()),
+                      );
+                    }).toList(),
+                    onChanged: (newVal) {
+                      setState(() {
+                        dropdownvalue1 = newVal;
+                        projectID.text = newVal!;
+                      });
+                    },
+                    value: dropdownvalue1,
+                  ),
                 ),
-// *********************************************************
+
                 const SizedBox(height: 20),
                 // progress indicator1
                 const Align(
@@ -235,6 +286,7 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                   onChanged: (double value) {
                     setState(() {
                       progressValue = value;
+                      progressIndicator.text = progressValue.toString();
                     });
                   },
                   label: progressValue.toInt().toString(),
@@ -244,7 +296,9 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                   height: 40,
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      postData(context);
+                    },
                     child: const Text('Modify'),
                   ),
                 ),
