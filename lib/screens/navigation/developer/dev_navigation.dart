@@ -1,4 +1,4 @@
-import 'package:client_onboarding_app/screens/assignproject/developer/assigntask.dart';
+import 'package:client_onboarding_app/screens/assignproject/developer/assignproject.dart';
 import 'package:client_onboarding_app/screens/daily_task/developer/daily_task.dart';
 import 'package:client_onboarding_app/screens/dashboard/developer/dev_dash.dart';
 import 'package:client_onboarding_app/screens/settings/developer/settings.dart';
@@ -19,7 +19,7 @@ class _MyDevNavState extends State<MyDevNav> {
   final screens = [
     const MyDevDashboard(),
     const MyDevDailyTask(),
-    const MyDevTaskAssign(),
+    const MyDevProjectDetails(),
     const MyDevSettings()
   ];
 

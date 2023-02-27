@@ -1,5 +1,10 @@
+import 'dart:convert';
+
+import 'package:client_onboarding_app/screens/2selectuser/homescreen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
+import 'package:http/http.dart' as http;
 
 class MyDevDashboard extends StatefulWidget {
   const MyDevDashboard({super.key});
@@ -9,10 +14,20 @@ class MyDevDashboard extends StatefulWidget {
 }
 
 class _MyDevDashboardState extends State<MyDevDashboard> {
+  // delete shared prefs
+  Future deleteSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('devId');
+  }
+
   TextEditingController dateController = TextEditingController();
+  TextEditingController projectID = TextEditingController();
+
   DateTime selectedDate = DateTime.now();
   double progressValue = 0;
   bool isVisibleButton = true;
+  String devName = '';
+  List projectList = [];
 
   void selectDate() {
     showDatePicker(
@@ -27,17 +42,71 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
     });
   }
 
+  Future getDevName() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var developerName = prefs.getString('devname');
+    setState(() {
+      devName = developerName!;
+    });
+  }
+
+  // project ID
+  Future getProjID() async {
+    var baseUrl = "http://10.0.2.2:80/FlutterApi/project/getProjectNames.php";
+    http.Response response = await http.get(Uri.parse(baseUrl));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      setState(() {
+        projectList = jsonData;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getProjID();
+    getDevName();
+    super.initState();
+  }
+
+  String? dropdownvalue1;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey.shade300,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              onPressed: () async {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return const MyUsers();
+                    },
+                  ),
+                );
+                // deleteSharedPrefs();
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.setString("devId", '');
+                prefs.setString("devname", '');
+              },
+              icon: const Icon(Icons.logout),
+              color: Colors.black,
+            )
+          ],
+        ),
         body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
                 // hi
                 const Align(
                   alignment: Alignment.centerLeft,
@@ -50,11 +119,11 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                   ),
                 ),
                 // user name
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Demo Name',
-                    style: TextStyle(
+                    devName,
+                    style: const TextStyle(
                         fontFamily: 'Poppins-Regular',
                         fontSize: 24,
                         fontWeight: FontWeight.bold),
@@ -109,6 +178,26 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                // Select project ID
+                // project cli ID
+                DropdownButton(
+                  hint: const Text('Project Title'),
+                  items: projectList.map((item) {
+                    return DropdownMenuItem(
+                      value: item['id'].toString(),
+                      child: Text(item['proj_name'].toString()),
+                    );
+                  }).toList(),
+                  onChanged: (newVal) {
+                    setState(() {
+                      dropdownvalue1 = newVal;
+                      projectID.text = newVal!;
+                    });
+                  },
+                  value: dropdownvalue1,
+                ),
+// *********************************************************
+                const SizedBox(height: 20),
                 // progress indicator1
                 const Align(
                   alignment: Alignment.centerLeft,
@@ -142,13 +231,15 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                   value: progressValue,
                   min: 0.0,
                   max: 100.0,
+                  divisions: 100,
                   onChanged: (double value) {
                     setState(() {
                       progressValue = value;
                     });
                   },
+                  label: progressValue.toInt().toString(),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 40.0),
                 SizedBox(
                   height: 40,
                   width: MediaQuery.of(context).size.width * 0.5,
@@ -157,6 +248,7 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                     child: const Text('Modify'),
                   ),
                 ),
+                const SizedBox(height: 20.0),
               ],
             ),
           ),

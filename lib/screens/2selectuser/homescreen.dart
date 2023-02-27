@@ -1,7 +1,11 @@
 import 'package:client_onboarding_app/screens/3loginpage/developer/login.dart';
 import 'package:client_onboarding_app/screens/3loginpage/client/login.dart';
 import 'package:client_onboarding_app/screens/3loginpage/pm/login.dart';
+import 'package:client_onboarding_app/screens/navigation/developer/dev_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+var checkDevId = '';
 
 class MyUsers extends StatefulWidget {
   const MyUsers({super.key});
@@ -11,6 +15,16 @@ class MyUsers extends StatefulWidget {
 }
 
 class _MyUsersState extends State<MyUsers> {
+  // shared prefs for dev
+  Future devValidationData() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var developerId = sharedPreferences.getString('devId');
+    setState(() {
+      checkDevId = developerId!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -122,12 +136,14 @@ class _MyUsersState extends State<MyUsers> {
                 // Developer
                 InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyDevLogin(),
-                      ),
-                    );
+                    devValidationData().whenComplete(() async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => checkDevId == ''
+                                  ? const MyDevLogin()
+                                  : const MyDevNav()));
+                    });
                   },
                   child: Column(
                     children: [

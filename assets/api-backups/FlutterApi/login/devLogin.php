@@ -18,7 +18,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // }
 
 // Query the database
-$sql = "SELECT cli_username, cli_password FROM cli_dev WHERE cli_username='$devUsername' AND cli_password='$devPassword'";
+$sql = "SELECT cli_username, cli_password, id FROM cli_dev WHERE cli_username='$devUsername' AND cli_password='$devPassword'";
 $result = $conn->query($sql);
 
 // Check if there are any results

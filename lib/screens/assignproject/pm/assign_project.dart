@@ -121,151 +121,151 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
-          child: Column(
-            children: [
-              // project name
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: TextField(
-                      keyboardType: TextInputType.text,
-                      controller: projectName,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Project Name',
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // project name
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: TextField(
+                        keyboardType: TextInputType.text,
+                        controller: projectName,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Project Name',
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
 
-              // project description
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: TextField(
-                      maxLines: null,
-                      keyboardType: TextInputType.text,
-                      controller: projectDesc,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Project Description',
+                // project description
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: TextField(
+                        maxLines: null,
+                        keyboardType: TextInputType.text,
+                        controller: projectDesc,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Project Description',
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // project start date
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: TextField(
-                      onTap: () {
-                        datePickerFunction(dateControllerStart);
-                      },
-                      maxLines: null,
-                      keyboardType: TextInputType.none,
-                      controller: dateControllerStart,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Start date',
+                // project start date
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: TextField(
+                        onTap: () {
+                          datePickerFunction(dateControllerStart);
+                        },
+                        maxLines: null,
+                        keyboardType: TextInputType.none,
+                        controller: dateControllerStart,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Start date',
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // project end date
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: TextField(
-                      onTap: () {
-                        datePickerFunction(dateControllerEnd);
-                      },
-                      maxLines: null,
-                      keyboardType: TextInputType.none,
-                      controller: dateControllerEnd,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'End date',
+                // project end date
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: TextField(
+                        onTap: () {
+                          datePickerFunction(dateControllerEnd);
+                        },
+                        maxLines: null,
+                        keyboardType: TextInputType.none,
+                        controller: dateControllerEnd,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'End date',
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // project cli ID
-              DropdownButton(
-                hint: const Text('Client Name'),
-                items: devList.map((item) {
-                  return DropdownMenuItem(
-                    value: item['id'].toString(),
-                    child: Text(item['cli_name'].toString()),
-                  );
-                }).toList(),
-                onChanged: (newVal) {
-                  setState(() {
-                    dropdownvalue1 = newVal;
-                    projectClientID.text = newVal!;
-                  });
-                },
-                value: dropdownvalue1,
-                // controller: projectClientID,
-              ),
-              // project dev ID
-              DropdownButton(
-                hint: const Text('Developer Name'),
-                items: clientList.map((item) {
-                  return DropdownMenuItem(
-                    value: item['id'].toString(),
-                    child: Text(item['cli_name'].toString()),
-                  );
-                }).toList(),
-                onChanged: (newVal) {
-                  setState(() {
-                    dropdownvalue2 = newVal;
-                    projectDevId.text = newVal!;
-                  });
-                },
-                value: dropdownvalue2,
-                // controller: projectDevId,
-              ),
-              // ***********
-              const SizedBox(height: 40),
-              SizedBox(
-                height: 40,
-                width: MediaQuery.of(context).size.width * 0.75,
-                child: ElevatedButton(
-                  onPressed: () {
-                    postData(context);
+                // project cli ID
+                DropdownButton(
+                  hint: const Text('Client Name'),
+                  items: clientList.map((item) {
+                    return DropdownMenuItem(
+                      value: item['id'].toString(),
+                      child: Text(item['cli_name'].toString()),
+                    );
+                  }).toList(),
+                  onChanged: (newVal) {
+                    setState(() {
+                      dropdownvalue1 = newVal;
+                      projectClientID.text = newVal!;
+                    });
                   },
-                  child: const Text('Save'),
+                  value: dropdownvalue1,
                 ),
-              ),
-            ],
+                // project dev ID
+                DropdownButton(
+                  hint: const Text('Developer Name'),
+                  items: devList.map((item) {
+                    return DropdownMenuItem(
+                      value: item['id'].toString(),
+                      child: Text(item['cli_name'].toString()),
+                    );
+                  }).toList(),
+                  onChanged: (newVal) {
+                    setState(() {
+                      dropdownvalue2 = newVal;
+                      projectDevId.text = newVal!;
+                    });
+                  },
+                  value: dropdownvalue2,
+                ),
+                // ***********
+                const SizedBox(height: 40),
+                SizedBox(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      postData(context);
+                    },
+                    child: const Text('Save'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

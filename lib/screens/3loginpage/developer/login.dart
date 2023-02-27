@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:client_onboarding_app/screens/navigation/developer/dev_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDevLogin extends StatefulWidget {
   const MyDevLogin({super.key});
@@ -52,6 +53,11 @@ class _MyDevLoginState extends State<MyDevLogin> {
         });
         emailController.clear();
         passwordController.clear();
+        // shared prefs
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        pref.setString("devId", data[0]['id']);
+        pref.setString("devname", data[0]['cli_username']);
+        // snackbar
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
