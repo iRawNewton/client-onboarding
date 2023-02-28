@@ -24,11 +24,11 @@ class _MyPmLoginState extends State<MyPmLogin> {
         Uri.parse('http://10.0.2.2:80/FlutterApi/login/pmLogin.php'),
         body: bodyParameter);
 
-    if (response.body == 'Found Nothingfd') {
+    if (response.body == 'No user found') {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: Colors.red,
-          content: Text('Error!'),
+          content: Text('Incorrect Username or Password. Try again!'),
         ),
       );
     } else {
@@ -39,7 +39,7 @@ class _MyPmLoginState extends State<MyPmLogin> {
           const SnackBar(
             duration: Duration(seconds: 1),
             backgroundColor: Colors.green,
-            content: Text('Success!'),
+            content: Text('Login Successful!'),
           ),
         );
         Timer(const Duration(seconds: 1), () {

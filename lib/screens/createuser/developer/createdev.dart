@@ -76,7 +76,7 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
                       controller: username,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'User Name',
+                        hintText: 'Username',
                       ),
                     ),
                   ),
@@ -142,7 +142,7 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
                       controller: phone,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Phone Number',
+                        hintText: 'Phone',
                       ),
                     ),
                   ),

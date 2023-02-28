@@ -10,36 +10,30 @@ class MyPmCreateClient extends StatefulWidget {
 
 class _MyPmCreateClientState extends State<MyPmCreateClient> {
   var maxlengthline = 10;
-  var url = 'http://10.0.2.2:80/FlutterApi/post.php';
 
   final cliId = TextEditingController();
   final cliPass = TextEditingController();
   final cliName = TextEditingController();
   final cliEmail = TextEditingController();
   final cliPhone = TextEditingController();
-  final cliProjectName = TextEditingController();
-  final cliProjectDesc = TextEditingController();
   dynamic data;
 
   postData(context) async {
-    var response = await http
-        .post(Uri.parse('http://10.0.2.2:80/FlutterApi/post.php'), body: {
-      'cli_userid': cliId.text,
-      'cli_pass': cliPass.text,
-      'cli_name': cliName.text,
-      'cli_email': cliEmail.text,
-      'cli_phone': cliPhone.text,
-      'cli_project_name': cliProjectName.text,
-      'cli_project_desc': cliProjectDesc.text,
-    });
+    var response = await http.post(
+        Uri.parse('http://10.0.2.2:80/FlutterApi/client/createClient.php'),
+        body: {
+          'cli_userid': cliId.text,
+          'cli_pass': cliPass.text,
+          'cli_name': cliName.text,
+          'cli_email': cliEmail.text,
+          'cli_phone': cliPhone.text,
+        });
     if (response.statusCode == 200) {
       cliId.clear();
       cliPass.clear();
       cliName.clear();
       cliEmail.clear();
       cliPhone.clear();
-      cliProjectName.clear();
-      cliProjectDesc.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -64,8 +58,6 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
     cliName.dispose();
     cliEmail.dispose();
     cliPhone.dispose();
-    cliProjectName.dispose();
-    cliProjectDesc.dispose();
     super.dispose();
   }
 
@@ -105,7 +97,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                         controller: cliId,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'ID',
+                          hintText: 'Username',
                           counterText: '',
                         ),
                       ),
@@ -126,7 +118,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                         controller: cliPass,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'client Pass',
+                          hintText: 'Password',
                         ),
                       ),
                     ),
@@ -146,7 +138,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                         controller: cliName,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'client name',
+                          hintText: 'Full Name',
                         ),
                       ),
                     ),
@@ -166,7 +158,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                         controller: cliEmail,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'client Email ID',
+                          hintText: 'Email ID',
                         ),
                       ),
                     ),
@@ -186,58 +178,19 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                         controller: cliPhone,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'client Phone Number',
+                          hintText: 'Phone',
                         ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 10.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: TextField(
-                        controller: cliProjectName,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'client Project Name',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: TextField(
-                        controller: cliProjectDesc,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'client Project Description',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 20.0),
+
                 ElevatedButton(
                   onPressed: () {
                     postData(context);
                   },
-                  child: const Text('save data'),
+                  child: const Text('Create client account'),
                 ),
               ],
             ),

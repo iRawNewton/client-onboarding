@@ -219,38 +219,60 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                   ),
                 ),
                 // project cli ID
-                DropdownButton(
-                  hint: const Text('Client Name'),
-                  items: clientList.map((item) {
-                    return DropdownMenuItem(
-                      value: item['id'].toString(),
-                      child: Text(item['cli_name'].toString()),
-                    );
-                  }).toList(),
-                  onChanged: (newVal) {
-                    setState(() {
-                      dropdownvalue1 = newVal;
-                      projectClientID.text = newVal!;
-                    });
-                  },
-                  value: dropdownvalue1,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButton(
+                      isExpanded: true,
+                      hint: const Text('Client Name'),
+                      items: clientList.map((item) {
+                        return DropdownMenuItem(
+                          value: item['id'].toString(),
+                          child: Text(item['cli_name'].toString()),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        setState(() {
+                          dropdownvalue1 = newVal;
+                          projectClientID.text = newVal!;
+                        });
+                      },
+                      value: dropdownvalue1,
+                    ),
+                  ),
                 ),
                 // project dev ID
-                DropdownButton(
-                  hint: const Text('Developer Name'),
-                  items: devList.map((item) {
-                    return DropdownMenuItem(
-                      value: item['id'].toString(),
-                      child: Text(item['cli_name'].toString()),
-                    );
-                  }).toList(),
-                  onChanged: (newVal) {
-                    setState(() {
-                      dropdownvalue2 = newVal;
-                      projectDevId.text = newVal!;
-                    });
-                  },
-                  value: dropdownvalue2,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButton(
+                      isExpanded: true,
+                      hint: const Text('Developer Name'),
+                      items: devList.map((item) {
+                        return DropdownMenuItem(
+                          value: item['id'].toString(),
+                          child: Text(item['cli_name'].toString()),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        setState(() {
+                          dropdownvalue2 = newVal;
+                          projectDevId.text = newVal!;
+                        });
+                      },
+                      value: dropdownvalue2,
+                    ),
+                  ),
                 ),
                 // ***********
                 const SizedBox(height: 40),
