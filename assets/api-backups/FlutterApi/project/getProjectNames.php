@@ -9,8 +9,10 @@ $db = new PDO("mysql:host={$db_server};dbname={$db_name};charset=utf8", $db_user
 $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$res = $db->prepare("SELECT id, proj_name FROM cli_project");
-$res->execute();
+$devid = $_POST['proj_dev_id'];
+
+$res = $db->prepare("SELECT id, proj_name FROM cli_project where proj_dev_id = ?");
+$res->execute([$devid]);
 $result = $res->fetchAll(PDO::FETCH_ASSOC);
 
 echo json_encode($result);

@@ -61,16 +61,23 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
     });
   }
 
-  // project ID
+  dynamic data;
+
   Future getProjID() async {
-    var baseUrl = "http://10.0.2.2:80/FlutterApi/project/getProjectNames.php";
-    http.Response response = await http.get(Uri.parse(baseUrl));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? developerID = prefs.getString('devId');
+    String devID = developerID.toString();
+    var response = await http.post(
+        Uri.parse('http://10.0.2.2:80/FlutterApi/project/getProjectNames.php'),
+        body: {
+          'proj_dev_id': devID,
+        });
     if (response.statusCode == 200) {
-      var jsonData = json.decode(response.body);
+      var jsonData = jsonDecode(response.body);
       setState(() {
         projectList = jsonData;
       });
-    }
+    } else {}
   }
 
   @override

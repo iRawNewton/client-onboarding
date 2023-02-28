@@ -1,7 +1,6 @@
 import 'package:client_onboarding_app/screens/2selectuser/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class MyAppGetStarted extends StatelessWidget {
   const MyAppGetStarted({super.key});

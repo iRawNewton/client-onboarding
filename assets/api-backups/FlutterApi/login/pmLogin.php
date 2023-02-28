@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
     echo json_encode($response);
 } else {
     // Return an error message
-    echo 'Found Nothingfd';
+    echo 'No user found';
 }
 
 // Close the connection
