@@ -85,7 +85,7 @@ flutter:
     - family: BakbakOne
       fonts:
         - asset: assets/fonts/BakbakOne-Regular.ttf
-    - family: Poppins-Regular
+    - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
     - family: Lato-Regular

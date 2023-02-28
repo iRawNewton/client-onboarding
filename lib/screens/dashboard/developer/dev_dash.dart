@@ -33,22 +33,27 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
   String devID = '';
   List projectList = [];
 
+  // void datePickerFunction(dateController) {
+  //   showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2018),
+  //     lastDate: DateTime(2025),
+  //   ).then(
+  //     (value) {
+  //       setState(() {
+  //         selectedDate = value!;
+  //         final formatter = DateFormat('dd/MM/yyyy');
+  //         final formatteddate = formatter.format(selectedDate);
+  //         dateController.text = formatteddate;
+  //       });
+  //     },
+  //   );
+  // }
   void datePickerFunction(dateController) {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2018),
-      lastDate: DateTime(2025),
-    ).then(
-      (value) {
-        setState(() {
-          selectedDate = value!;
-          final formatter = DateFormat('dd/MM/yyyy');
-          final formatteddate = formatter.format(selectedDate);
-          dateController.text = formatteddate;
-        });
-      },
-    );
+    var initialDate = DateTime.now();
+    final formatter = DateFormat('dd/MM/yyyy');
+    dateController.text = formatter.format(initialDate);
   }
 
   Future getDevName() async {
@@ -194,6 +199,7 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
+                        readOnly: true,
                         keyboardType: TextInputType.none,
                         controller: dateController,
                         decoration: const InputDecoration(

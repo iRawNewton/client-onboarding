@@ -10,8 +10,9 @@ $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $iDate = $_POST['cli_date'];
-$timestamp = strtotime($iDate);
-$date = date('Y-m-d',$timestamp);
+$date = str_replace("/","-",$iDate);
+$date = strtotime($date);
+$date = date('Y-m-d',$date);
 
 $task =  $_POST['cli_task'];
 $progress = $_POST['cli_progress'];
