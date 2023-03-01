@@ -30,7 +30,7 @@ class MyAppGetStarted extends StatelessWidget {
                 const Text(
                   'See your Project Status with\nKyptronix',
                   style: TextStyle(
-                      fontFamily: 'BakbakOne',
+                      fontFamily: 'fontOne',
                       fontSize: 24,
                       fontStyle: FontStyle.italic),
                   textAlign: TextAlign.center,
@@ -41,7 +41,7 @@ class MyAppGetStarted extends StatelessWidget {
                   child: Text(
                     'Our platform gives you an up-to-date view of\nyour project status so you can stay on top of things.',
                     style: TextStyle(
-                        fontFamily: 'Poppins-Regular',
+                        fontFamily: 'fontThree',
                         fontSize: 14,
                         fontWeight: FontWeight.w600),
                     textAlign: TextAlign.center,
@@ -66,7 +66,11 @@ class MyAppGetStarted extends StatelessWidget {
                         },
                         child: const Text(
                           'Get Started',
-                          style: TextStyle(fontSize: 18, letterSpacing: 1),
+                          style: TextStyle(
+                              fontSize: 18,
+                              letterSpacing: 1,
+                              fontFamily: 'fontOne',
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),

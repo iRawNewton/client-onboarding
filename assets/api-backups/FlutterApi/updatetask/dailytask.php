@@ -22,6 +22,9 @@ $projid = $_POST['cli_projid'];
 $stmt = $db->prepare("INSERT INTO cli_daily_task (cli_date, cli_task, cli_progress, cli_devid, cli_projid) VALUES (?, ?, ?, ?, ?)");
 $result = $stmt->execute([$date, $task, $progress, $devid, $projid]);
 
+$stmts = $db->prepare("UPDATE cli_project SET proj_progress = ? WHERE id = ?;");
+$stmts->execute([$progress, $projid]);
+
 echo json_encode([
 'success' => $result
 ]);

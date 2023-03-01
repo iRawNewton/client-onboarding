@@ -74,9 +74,15 @@ class _MyPmLoginState extends State<MyPmLogin> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.amber.shade100,
         body: Container(
+          height: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/background.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -87,7 +93,7 @@ class _MyPmLoginState extends State<MyPmLogin> {
                   child: Text(
                     'Welcome to',
                     style: TextStyle(
-                      fontFamily: 'BakbakOne',
+                      fontFamily: 'fontOne',
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -101,7 +107,7 @@ class _MyPmLoginState extends State<MyPmLogin> {
                   child: Text(
                     'Client Onboarding Mobile \nApplication',
                     style: TextStyle(
-                      fontFamily: 'BakbakOne',
+                      fontFamily: 'fontOne',
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Color(0xff4f9d69),
