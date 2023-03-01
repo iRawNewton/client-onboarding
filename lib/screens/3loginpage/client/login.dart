@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:client_onboarding_app/screens/dashboard/developer/dev_dash.dart';
+import 'package:client_onboarding_app/screens/dashboard/client/client_dash.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyClientLogin extends StatefulWidget {
   const MyClientLogin({super.key});
@@ -46,12 +47,17 @@ class _MyClientLoginState extends State<MyClientLogin> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const MyDevDashboard(),
+              builder: (context) => const MyClientDashboard(),
             ),
           );
         });
         emailText.clear();
         passwordText.clear();
+        // shared prefs
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        pref.setString("cliId", data[0]['id']);
+        pref.setString("cliname", data[0]['cli_name']);
+        // snackbar
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

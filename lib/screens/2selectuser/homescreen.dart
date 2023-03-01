@@ -1,12 +1,14 @@
 import 'package:client_onboarding_app/screens/3loginpage/developer/login.dart';
 import 'package:client_onboarding_app/screens/3loginpage/client/login.dart';
 import 'package:client_onboarding_app/screens/3loginpage/pm/login.dart';
+import 'package:client_onboarding_app/screens/dashboard/client/client_dash.dart';
 import 'package:client_onboarding_app/screens/navigation/developer/dev_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var checkDevId = '';
+var clientID = '';
 
 class MyUsers extends StatefulWidget {
   const MyUsers({super.key});
@@ -21,8 +23,10 @@ class _MyUsersState extends State<MyUsers> {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     var developerId = sharedPreferences.getString('devId');
+    var clientId = sharedPreferences.getString('cliId');
     setState(() {
       checkDevId = developerId!;
+      clientID = clientId!;
     });
   }
 
@@ -130,12 +134,14 @@ class _MyUsersState extends State<MyUsers> {
                             borderRadius: BorderRadius.circular(10.0)),
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const MyClientLogin(),
-                              ),
-                            );
+                            devValidationData().whenComplete(() async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => clientID == ''
+                                          ? const MyClientLogin()
+                                          : const MyClientDashboard()));
+                            });
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xff4BE0DC),
