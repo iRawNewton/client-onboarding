@@ -1,7 +1,7 @@
 <?php
 
 // Get the parameters from the Flutter app
-$devID = $_POST['proj_dev_id'];
+$devID = $_POST['dev_id'];
 
 // Connect to the MySQL database
 $servername = "localhost";
@@ -17,7 +17,11 @@ if ($conn->connect_error) {
 }
 
 // Query the database
-$sql = "SELECT proj_name, proj_desc, proj_startdate, proj_enddate, proj_cli_id, proj_dev_id FROM cli_project WHERE proj_dev_id= '$devID'";
+$sql = "SELECT cli_daily_task.cli_date, cli_daily_task.cli_task, cli_daily_task.cli_progress, cli_project.proj_name 
+        FROM cli_daily_task,cli_project 
+        WHERE cli_daily_task.cli_projid=cli_project.id 
+        AND cli_daily_task.cli_devid='$devID'";
+        
 $result = $conn->query($sql);
 
 // Check if there are any results
