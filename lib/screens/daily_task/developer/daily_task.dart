@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class MyDevDailyTask extends StatefulWidget {
   const MyDevDailyTask({super.key});
@@ -144,68 +143,6 @@ class _MyDevDailyTaskState extends State<MyDevDailyTask> {
                                         ),
                                         trailing: Text(
                                             '${data[index]['cli_progress']}%'),
-
-                                        // trailing: IconButton(
-                                        //     onPressed: () {
-                                        //       showDialog(
-                                        //           context: context,
-                                        //           builder: (context) => AlertDialog(
-                                        //                 title: const Text(
-                                        //                     'Overall Project Description'),
-                                        //                 content: Column(
-                                        //                   children: [
-                                        //                     Align(
-                                        //                       alignment:
-                                        //                           Alignment.centerLeft,
-                                        //                       child: Text(
-                                        //                         'Project Description: ${data[index]['proj_desc']}',
-                                        //                         textAlign:
-                                        //                             TextAlign.justify,
-                                        //                       ),
-                                        //                     ),
-                                        //                     const SizedBox(
-                                        //                         height: 20.0),
-                                        //                     Align(
-                                        //                       alignment:
-                                        //                           Alignment.centerLeft,
-                                        //                       child: Text(
-                                        //                         'Starting Date: ${data[index]['proj_startdate']}',
-                                        //                         textAlign:
-                                        //                             TextAlign.justify,
-                                        //                       ),
-                                        //                     ),
-                                        //                     const SizedBox(
-                                        //                         height: 10.0),
-                                        //                     Align(
-                                        //                       alignment:
-                                        //                           Alignment.centerLeft,
-                                        //                       child: Text(
-                                        //                         'Ending Date: ${data[index]['proj_enddate']}',
-                                        //                         textAlign:
-                                        //                             TextAlign.justify,
-                                        //                       ),
-                                        //                     ),
-                                        //                   ],
-                                        //                 ),
-                                        //                 actions: [
-                                        //                   TextButton(
-                                        //                     style: TextButton.styleFrom(
-                                        //                       textStyle:
-                                        //                           Theme.of(context)
-                                        //                               .textTheme
-                                        //                               .labelLarge,
-                                        //                     ),
-                                        //                     child:
-                                        //                         const Text('Continue'),
-                                        //                     onPressed: () {
-                                        //                       Navigator.of(context)
-                                        //                           .pop();
-                                        //                     },
-                                        //                   ),
-                                        //                 ],
-                                        //               ));
-                                        //     },
-                                        //     icon: const Icon(Icons.arrow_forward_ios)),
                                       ),
                                     ),
                                   ],
