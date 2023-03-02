@@ -17,7 +17,8 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
 
   postData(context) async {
     var response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/dev/createdev.php'),
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/dev/createdev.php'),
         body: {
           'cli_username': username.text,
           'cli_password': password.text,

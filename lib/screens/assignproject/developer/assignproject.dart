@@ -12,7 +12,8 @@ class MyDevProjectDetails extends StatefulWidget {
 
 class _MyDevProjectDetailsState extends State<MyDevProjectDetails> {
   var maxlengthline = 10;
-  var url = 'http://10.0.2.2:80/FlutterApi/project/ShowDevProjectDetails.php';
+  var url =
+      'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/project/ShowDevProjectDetails.php';
 
   dynamic data;
 

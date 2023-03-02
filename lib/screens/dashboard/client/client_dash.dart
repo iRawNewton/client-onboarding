@@ -28,7 +28,7 @@ class _MyClientDashboardState extends State<MyClientDashboard> {
     String cliID = clientID.toString();
     var response = await http.post(
         Uri.parse(
-            'http://10.0.2.2:80/FlutterApi/client/dashboard/clientDashboard.php'),
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/client/dashboard/clientDashboard.php'),
         body: {
           'proj_cli_id': cliID,
         });

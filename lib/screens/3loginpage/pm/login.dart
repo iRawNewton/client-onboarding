@@ -22,7 +22,8 @@ class _MyPmLoginState extends State<MyPmLogin> {
       'cli_password': passwordText.text,
     };
     var response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/login/pmLogin.php'),
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/login/pmLogin.php'),
         body: bodyParameter);
 
     if (response.body == 'No user found') {
@@ -155,7 +156,8 @@ class _MyPmLoginState extends State<MyPmLogin> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(
+                            fontSize: 18, fontFamily: 'fontThree'),
                         controller: passwordText,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
@@ -188,7 +190,7 @@ class _MyPmLoginState extends State<MyPmLogin> {
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
-                        fontFamily: 'fontFive',
+                        fontFamily: 'fontTwo',
                       ),
                     ),
                   ),

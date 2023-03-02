@@ -23,7 +23,8 @@ class _MyClientLoginState extends State<MyClientLogin> {
       'cli_pass': passwordText.text,
     };
     var response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/login/cliLogin.php'),
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/login/cliLogin.php'),
         body: bodyParameter);
 
     if (response.body == 'Found Nothing') {

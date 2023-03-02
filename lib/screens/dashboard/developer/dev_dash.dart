@@ -56,7 +56,8 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
     String? developerID = prefs.getString('devId');
     String devID = developerID.toString();
     var response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/project/getProjectNames.php'),
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/project/getProjectNames.php'),
         body: {
           'proj_dev_id': devID,
         });
@@ -80,7 +81,8 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
   // *****************************
   postData(context) async {
     var response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/updatetask/dailytask.php'),
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/updatetask/dailytask.php'),
         body: {
           'cli_date': dateController.text,
           'cli_task': taskDone.text,

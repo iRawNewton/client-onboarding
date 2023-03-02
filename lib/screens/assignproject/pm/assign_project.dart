@@ -44,7 +44,8 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
 
   postData(context) async {
     var response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/project/createProject.php'),
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/project/createProject.php'),
         body: {
           'proj_name': projectName.text,
           'proj_desc': projectDesc.text,
@@ -80,7 +81,8 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
 
   // developerID
   Future getClientID() async {
-    var baseUrl = "http://10.0.2.2:80/FlutterApi/ListBox1.php";
+    var baseUrl =
+        'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/ListBox1.php';
     http.Response response = await http.get(Uri.parse(baseUrl));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -92,7 +94,8 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
 
   // clientID
   Future getDevID() async {
-    var baseUrl = "http://10.0.2.2:80/FlutterApi/ListBox2.php";
+    var baseUrl =
+        'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/ListBox2.php';
     http.Response response = await http.get(Uri.parse(baseUrl));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -117,7 +120,9 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text('Create Project'),
+          centerTitle: true,
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
@@ -135,6 +140,8 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
+                        style: const TextStyle(
+                            fontSize: 18, fontFamily: 'fontThree'),
                         keyboardType: TextInputType.text,
                         controller: projectName,
                         decoration: const InputDecoration(
@@ -145,7 +152,7 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     ),
                   ),
                 ),
-
+                const SizedBox(height: 10),
                 // project description
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -157,6 +164,8 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
+                        style: const TextStyle(
+                            fontSize: 18, fontFamily: 'fontThree'),
                         maxLines: null,
                         keyboardType: TextInputType.text,
                         controller: projectDesc,
@@ -168,6 +177,7 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 // project start date
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -182,6 +192,8 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                         onTap: () {
                           datePickerFunction(dateControllerStart);
                         },
+                        style: const TextStyle(
+                            fontSize: 18, fontFamily: 'fontThree'),
                         maxLines: null,
                         keyboardType: TextInputType.none,
                         controller: dateControllerStart,
@@ -193,6 +205,7 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 // project end date
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -204,6 +217,8 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
+                        style: const TextStyle(
+                            fontSize: 18, fontFamily: 'fontThree'),
                         onTap: () {
                           datePickerFunction(dateControllerEnd);
                         },
@@ -218,6 +233,7 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 // project cli ID
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -228,6 +244,12 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton(
+                      dropdownColor: Colors.grey[200],
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'fontThree',
+                          color: Colors.black),
+                      underline: const SizedBox(),
                       isExpanded: true,
                       hint: const Text('Client Name'),
                       items: clientList.map((item) {
@@ -246,6 +268,7 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 // project dev ID
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -256,6 +279,12 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                         border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton(
+                      dropdownColor: Colors.grey[200],
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'fontThree',
+                          color: Colors.black),
+                      underline: const SizedBox(),
                       isExpanded: true,
                       hint: const Text('Developer Name'),
                       items: devList.map((item) {
@@ -274,6 +303,7 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 // ***********
                 const SizedBox(height: 40),
                 SizedBox(
@@ -283,7 +313,15 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     onPressed: () {
                       postData(context);
                     },
-                    child: const Text('Save'),
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontFamily: 'fontTwo',
+                      ),
+                    ),
                   ),
                 ),
               ],

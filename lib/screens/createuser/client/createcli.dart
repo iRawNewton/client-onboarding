@@ -20,7 +20,8 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
 
   postData(context) async {
     var response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/client/createClient.php'),
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/client/createClient.php'),
         body: {
           'cli_userid': cliId.text,
           'cli_pass': cliPass.text,

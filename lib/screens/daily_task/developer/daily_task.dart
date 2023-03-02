@@ -13,9 +13,10 @@ class MyDevDailyTask extends StatefulWidget {
 
 class _MyDevDailyTaskState extends State<MyDevDailyTask> {
   var maxlengthline = 10;
-  var url = 'http://10.0.2.2:80/FlutterApi/updatetask/getDailytask.php';
+  var url =
+      'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/updatetask/getDailytask.php';
   var deleteUrl =
-      'http://10.0.2.2:80/FlutterApi/updatetask/deleteDailytask.php';
+      'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/updatetask/deleteDailytask.php';
 
   dynamic data;
   TextEditingController taskDoneUpdate = TextEditingController();
