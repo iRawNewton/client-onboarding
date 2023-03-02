@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:client_onboarding_app/screens/navigation/pm/pm_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 
 class MyPmLogin extends StatefulWidget {
   const MyPmLogin({super.key});
@@ -91,7 +92,7 @@ class _MyPmLoginState extends State<MyPmLogin> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Welcome to',
+                    'Welcome Project Manager',
                     style: TextStyle(
                       fontFamily: 'fontOne',
                       fontSize: 36,
@@ -105,16 +106,19 @@ class _MyPmLoginState extends State<MyPmLogin> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Client Onboarding Mobile \nApplication',
+                    'Login to continue',
                     style: TextStyle(
                       fontFamily: 'fontOne',
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xff4f9d69),
+                      color: Color(0xff0101D3),
                     ),
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    child: Lottie.asset(
+                        'assets/animations/welcome_animation.json')),
                 // username
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -126,12 +130,13 @@ class _MyPmLoginState extends State<MyPmLogin> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
+                        style: const TextStyle(fontSize: 18),
                         controller: emailText,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Email',
                           hintStyle: TextStyle(
-                            color: Color(0xff4f9d69),
+                            color: Color(0xff0101D3),
                           ),
                         ),
                       ),
@@ -150,12 +155,13 @@ class _MyPmLoginState extends State<MyPmLogin> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
+                        style: const TextStyle(fontSize: 18),
                         controller: passwordText,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Password',
                           hintStyle: TextStyle(
-                            color: Color(0xff4f9d69),
+                            color: Color(0xff0101D3),
                           ),
                         ),
                       ),
@@ -168,15 +174,23 @@ class _MyPmLoginState extends State<MyPmLogin> {
                 SizedBox(
                   // width: MediaQuery.of(context).size.width * 0.75,
                   width: double.infinity,
-                  height: 40,
+                  height: 50,
                   child: ElevatedButton(
                     onPressed: () {
                       pmLoginFunc(emailText, passwordText, context);
                     },
                     style: const ButtonStyle(
                         backgroundColor:
-                            MaterialStatePropertyAll(Colors.black)),
-                    child: const Text('Login'),
+                            MaterialStatePropertyAll(Color(0xff0101D3))),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontFamily: 'fontFive',
+                      ),
+                    ),
                   ),
                 ),
               ],

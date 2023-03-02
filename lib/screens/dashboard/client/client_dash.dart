@@ -58,36 +58,38 @@ class _MyClientDashboardState extends State<MyClientDashboard> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xffbee6ce),
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              onPressed: () async {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return const MyUsers();
-                    },
-                  ),
-                );
-                // deleteSharedPrefs();
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setString("cliId", '');
-                prefs.setString("cliname", '');
-              },
-              icon: const Icon(Icons.logout),
-              color: Colors.black,
-            )
-          ],
-        ),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/background.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Column(
             children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  onPressed: () async {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const MyUsers();
+                        },
+                      ),
+                    );
+                    // deleteSharedPrefs();
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setString("cliId", '');
+                    prefs.setString("cliname", '');
+                  },
+                  icon: const Icon(Icons.logout),
+                  color: Colors.black,
+                ),
+              ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -155,13 +157,13 @@ class _MyClientDashboardState extends State<MyClientDashboard> {
                 currentStep: progress,
                 size: 50,
                 padding: 0,
-                selectedColor: Colors.green,
-                unselectedColor: Colors.red,
+                // selectedColor: Colors.greenAccent,
+                // unselectedColor: Colors.red,
                 roundedEdges: const Radius.circular(10),
                 selectedGradientColor: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Colors.green, Colors.green],
+                  colors: [Colors.green, Colors.greenAccent],
                 ),
                 unselectedGradientColor: const LinearGradient(
                   begin: Alignment.topLeft,

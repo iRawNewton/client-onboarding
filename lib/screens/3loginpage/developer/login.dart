@@ -159,9 +159,7 @@ class _MyDevLoginState extends State<MyDevLogin> {
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
                         controller: passwordController,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
+                        style: const TextStyle(fontSize: 18),
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Password',

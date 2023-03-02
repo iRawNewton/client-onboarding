@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:client_onboarding_app/screens/dashboard/client/client_dash.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyClientLogin extends StatefulWidget {
@@ -80,9 +81,15 @@ class _MyClientLoginState extends State<MyClientLogin> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xffbee6ce),
         body: Container(
+          height: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/background.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -91,9 +98,9 @@ class _MyClientLoginState extends State<MyClientLogin> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Welcome to',
+                    'Welcome client',
                     style: TextStyle(
-                      fontFamily: 'BakbakOne',
+                      fontFamily: 'fontOne',
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -105,16 +112,21 @@ class _MyClientLoginState extends State<MyClientLogin> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Client Onboarding Mobile \nApplication',
+                    'Login to continue',
                     style: TextStyle(
-                      fontFamily: 'BakbakOne',
+                      fontFamily: 'fontOne',
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xff4f9d69),
+                      color: Colors.deepOrange,
                     ),
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                // animation
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  child:
+                      Lottie.asset('assets/animations/welcome_animation.json'),
+                ),
                 // username
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -126,12 +138,13 @@ class _MyClientLoginState extends State<MyClientLogin> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
+                        style: const TextStyle(fontSize: 18),
                         controller: emailText,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Email',
                           hintStyle: TextStyle(
-                            color: Color(0xff4f9d69),
+                            color: Colors.deepOrange,
                           ),
                         ),
                       ),
@@ -150,12 +163,13 @@ class _MyClientLoginState extends State<MyClientLogin> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
+                        style: const TextStyle(fontSize: 18),
                         controller: passwordText,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Password',
                           hintStyle: TextStyle(
-                            color: Color(0xff4f9d69),
+                            color: Colors.deepOrange,
                           ),
                         ),
                       ),
@@ -168,15 +182,23 @@ class _MyClientLoginState extends State<MyClientLogin> {
                 SizedBox(
                   // width: MediaQuery.of(context).size.width * 0.75,
                   width: double.infinity,
-                  height: 40,
+                  height: 50,
                   child: ElevatedButton(
                     onPressed: () {
                       cliLoginFunc(emailText, passwordText, context);
                     },
                     style: const ButtonStyle(
                         backgroundColor:
-                            MaterialStatePropertyAll(Colors.black)),
-                    child: const Text('Login'),
+                            MaterialStatePropertyAll(Colors.deepOrange)),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontFamily: 'fontFive',
+                      ),
+                    ),
                   ),
                 ),
               ],
