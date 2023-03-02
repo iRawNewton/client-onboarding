@@ -30,9 +30,10 @@ class MyAppGetStarted extends StatelessWidget {
                 const Text(
                   'See your Project Status with\nKyptronix',
                   style: TextStyle(
-                      fontFamily: 'fontOne',
-                      fontSize: 24,
-                      fontStyle: FontStyle.italic),
+                    fontFamily: 'fontOne',
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 15),
@@ -69,7 +70,7 @@ class MyAppGetStarted extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18,
                               letterSpacing: 1,
-                              fontFamily: 'fontOne',
+                              fontFamily: 'fontTwo',
                               fontWeight: FontWeight.bold),
                         ),
                       ),

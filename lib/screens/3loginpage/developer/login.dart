@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:client_onboarding_app/screens/navigation/developer/dev_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDevLogin extends StatefulWidget {
@@ -80,9 +81,15 @@ class _MyDevLoginState extends State<MyDevLogin> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey.shade300,
         body: Container(
+          height: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/background.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -93,7 +100,7 @@ class _MyDevLoginState extends State<MyDevLogin> {
                   child: Text(
                     'Welcome Developer',
                     style: TextStyle(
-                        fontFamily: 'BakbakOne',
+                        fontFamily: 'fontOne',
                         fontSize: 36,
                         fontWeight: FontWeight.bold),
                   ),
@@ -103,15 +110,21 @@ class _MyDevLoginState extends State<MyDevLogin> {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Please Login',
+                    'Login to continue',
                     style: TextStyle(
-                        fontFamily: 'BakbakOne',
+                        fontFamily: 'fontOne',
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Colors.red),
+                        color: Color(0xffFDA615)),
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                // animation
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  child:
+                      Lottie.asset('assets/animations/welcome_animation.json'),
+                ),
+                // SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 // username
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -124,6 +137,7 @@ class _MyDevLoginState extends State<MyDevLogin> {
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
                         controller: emailController,
+                        style: const TextStyle(fontSize: 18),
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Email',
@@ -145,6 +159,9 @@ class _MyDevLoginState extends State<MyDevLogin> {
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
                         controller: passwordController,
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Password',
@@ -154,26 +171,38 @@ class _MyDevLoginState extends State<MyDevLogin> {
                   ),
                 ),
                 // forgot password
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text('Forgot Password?'),
-                  ),
-                ),
-                // login button
-                SizedBox(
-                  width: double.infinity,
-                  height: 40,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      devLoginFunc(
-                          emailController, passwordController, context);
-                    },
-                    style: const ButtonStyle(
-                        backgroundColor:
-                            MaterialStatePropertyAll(Colors.black)),
-                    child: const Text('Login'),
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: TextButton(
+                //     onPressed: () {},
+                //     child: const Text('Forgot Password?'),
+                //   ),
+                // ),
+                // login
+                const SizedBox(height: 20.0),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  height: 50,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        devLoginFunc(
+                            emailController, passwordController, context);
+                      },
+                      style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Color(0xffFDA615))),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          fontFamily: 'fontFive',
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],

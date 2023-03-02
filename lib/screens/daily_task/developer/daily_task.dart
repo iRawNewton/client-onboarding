@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,8 @@ class MyDevDailyTask extends StatefulWidget {
 class _MyDevDailyTaskState extends State<MyDevDailyTask> {
   var maxlengthline = 10;
   var url = 'http://10.0.2.2:80/FlutterApi/updatetask/getDailytask.php';
+  var deleteUrl =
+      'http://10.0.2.2:80/FlutterApi/updatetask/deleteDailytask.php';
 
   dynamic data;
   TextEditingController taskDoneUpdate = TextEditingController();
@@ -34,27 +37,15 @@ class _MyDevDailyTaskState extends State<MyDevDailyTask> {
     } else {}
   }
 
-  Future getProjID() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? developerID = prefs.getString('devId');
-    String devID = developerID.toString();
-    var response = await http.post(
-        Uri.parse('http://10.0.2.2:80/FlutterApi/project/getProjectNames.php'),
-        body: {
-          'proj_dev_id': devID,
-        });
+  delete(delteDate, deleteDev, deleteProj) async {
+    var response = await http.post(Uri.parse(deleteUrl), body: {
+      'deleteData': delteDate,
+      'deleteDev': deleteDev,
+      'deleteProj': deleteProj
+    });
     if (response.statusCode == 200) {
-      var jsonData = jsonDecode(response.body);
-      setState(() {
-        projectList = jsonData;
-      });
-    } else {}
-  }
-
-  @override
-  void initState() {
-    getProjID();
-    super.initState();
+      setState(() {});
+    }
   }
 
   String? dropdownvalue1;
@@ -95,38 +86,21 @@ class _MyDevDailyTaskState extends State<MyDevDailyTask> {
                                 child: Column(
                                   children: [
                                     const SizedBox(height: 15.0),
-                                    InkWell(
-                                      onLongPress: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                                  title: const Text(
-                                                      'Edit Information'),
-                                                  content:
-                                                      SingleChildScrollView(
-                                                    child: Column(
-                                                      children: [],
-                                                    ),
-                                                  ),
-                                                  actions: [
-                                                    TextButton(
-                                                      style:
-                                                          TextButton.styleFrom(
-                                                        textStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .labelLarge,
-                                                      ),
-                                                      child:
-                                                          const Text('Update'),
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    ),
-                                                  ],
-                                                ));
-                                      },
+                                    Slidable(
+                                      endActionPane: ActionPane(
+                                          motion: const BehindMotion(),
+                                          children: [
+                                            SlidableAction(
+                                              onPressed: (context) {
+                                                delete(
+                                                    data[index]['cli_date'],
+                                                    data[index]['cli_devid'],
+                                                    data[index]['cli_projid']);
+                                              },
+                                              icon: Icons.delete,
+                                              backgroundColor: Colors.red,
+                                            )
+                                          ]),
                                       child: ListTile(
                                         textColor: Colors.white,
                                         tileColor: Colors.black,

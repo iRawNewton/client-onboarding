@@ -133,7 +133,6 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey.shade300,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -171,7 +170,7 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                   child: Text(
                     'Hi,',
                     style: TextStyle(
-                        fontFamily: 'Poppins-Regular',
+                        fontFamily: 'fontOne',
                         fontSize: 24,
                         fontWeight: FontWeight.bold),
                   ),
@@ -182,12 +181,12 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                   child: Text(
                     devName,
                     style: const TextStyle(
-                        fontFamily: 'Poppins-Regular',
+                        fontFamily: 'fontOne',
                         fontSize: 24,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 // date
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -226,7 +225,7 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
                         controller: taskDone,
-                        maxLines: 10,
+                        maxLines: 5,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Task Done',
@@ -238,24 +237,28 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                 const SizedBox(height: 20),
                 // Select project ID
                 // project cli ID
-                SizedBox(
-                  width: double.infinity,
-                  child: DropdownButton(
-                    isExpanded: true,
-                    hint: const Text('Project Title'),
-                    items: projectList.map((item) {
-                      return DropdownMenuItem(
-                        value: item['id'].toString(),
-                        child: Text(item['proj_name'].toString()),
-                      );
-                    }).toList(),
-                    onChanged: (newVal) {
-                      setState(() {
-                        dropdownvalue1 = newVal;
-                        projectID.text = newVal!;
-                      });
-                    },
-                    value: dropdownvalue1,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 60,
+                    child: DropdownButton(
+                      isExpanded: true,
+                      hint: const Text('Project Title'),
+                      items: projectList.map((item) {
+                        return DropdownMenuItem(
+                          value: item['id'].toString(),
+                          child: Text(item['proj_name'].toString()),
+                        );
+                      }).toList(),
+                      onChanged: (newVal) {
+                        setState(() {
+                          dropdownvalue1 = newVal;
+                          projectID.text = newVal!;
+                        });
+                      },
+                      value: dropdownvalue1,
+                    ),
                   ),
                 ),
 
@@ -274,22 +277,23 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                   currentStep: progressValue.toInt(),
                   size: 50,
                   padding: 0,
-                  selectedColor: Colors.green,
-                  unselectedColor: Colors.red,
+                  // selectedColor: Colors.greenAccent.shade700,
+                  // unselectedColor: Colors.red,
                   roundedEdges: const Radius.circular(10),
-                  selectedGradientColor: const LinearGradient(
+                  selectedGradientColor: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [Colors.green, Colors.green],
+                    colors: [Colors.greenAccent.shade700, Colors.green],
                   ),
-                  unselectedGradientColor: const LinearGradient(
+                  unselectedGradientColor: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [Colors.grey, Colors.grey],
+                    colors: [Colors.grey.shade300, Colors.grey.shade300],
                   ),
                 ),
                 // slider
                 Slider(
+                  activeColor: const Color(0xffFDA615),
                   value: progressValue,
                   min: 0.0,
                   max: 100.0,
@@ -304,13 +308,19 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                 ),
                 const SizedBox(height: 40.0),
                 SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   child: ElevatedButton(
                     onPressed: () {
                       postData(context);
                     },
-                    child: const Text('Modify'),
+                    style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(Color(0xffFDA615))),
+                    child: const Text(
+                      'Modify',
+                      style: TextStyle(color: Colors.black, fontSize: 18),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20.0),
