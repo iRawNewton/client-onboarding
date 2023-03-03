@@ -174,13 +174,24 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
               // elevatedbutton
               const SizedBox(height: 50),
               SizedBox(
-                height: 40.0,
-                width: MediaQuery.of(context).size.width - 100,
+                height: 40,
+                width: MediaQuery.of(context).size.width * 0.75,
                 child: ElevatedButton(
                   onPressed: () {
                     postData(context);
                   },
-                  child: const Text('Save'),
+                  style: const ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Color(0xff0101D3))),
+                  child: const Text(
+                    'Save',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      fontFamily: 'fontTwo',
+                    ),
+                  ),
                 ),
               ),
             ],

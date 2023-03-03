@@ -131,7 +131,8 @@ class _MyPmLoginState extends State<MyPmLogin> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: TextField(
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(
+                            fontSize: 18, fontFamily: 'fontThree'),
                         controller: emailText,
                         decoration: const InputDecoration(
                           border: InputBorder.none,

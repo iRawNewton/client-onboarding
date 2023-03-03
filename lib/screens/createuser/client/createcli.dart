@@ -187,11 +187,26 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                 ),
                 const SizedBox(height: 20.0),
 
-                ElevatedButton(
-                  onPressed: () {
-                    postData(context);
-                  },
-                  child: const Text('Create client account'),
+                SizedBox(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      postData(context);
+                    },
+                    style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(Color(0xff0101D3))),
+                    child: const Text(
+                      'Create client account',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontFamily: 'fontTwo',
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

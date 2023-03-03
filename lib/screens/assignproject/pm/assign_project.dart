@@ -313,10 +313,13 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     onPressed: () {
                       postData(context);
                     },
+                    style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(Color(0xff0101D3))),
                     child: const Text(
                       'Save',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                         fontFamily: 'fontTwo',
