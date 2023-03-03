@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:client_onboarding_app/screens/2selectuser/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:http/http.dart' as http;
@@ -276,6 +277,24 @@ class _MyDevDashboardState extends State<MyDevDashboard> {
                     colors: [Colors.grey.shade300, Colors.grey.shade300],
                   ),
                 ),
+                // *************
+                const SizedBox(height: 10.0),
+                SizedBox(
+                  height: 60,
+                  child: LiquidLinearProgressIndicator(
+                    value: progressValue.toDouble() / 100, // Defaults to 0.5.
+                    valueColor: const AlwaysStoppedAnimation(Colors.blue),
+                    backgroundColor: Colors
+                        .white, // Defaults to the current Theme's backgroundColor.
+                    borderColor: Colors.white,
+                    borderWidth: 1.0,
+                    borderRadius: 12.0,
+                    direction: Axis
+                        .horizontal, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.horizontal.
+                    center: Text(progressValue.toString()),
+                  ),
+                ),
+                // *************
                 // slider
                 Slider(
                   activeColor: const Color(0xffFDA615),

@@ -61,7 +61,7 @@ class _MyUsersState extends State<MyUsers> {
                   ),
                 ),
                 // choose your role
-                const SizedBox(height: 10),
+                const SizedBox(height: 0),
                 const Align(
                     alignment: Alignment.center,
                     child: Text(
@@ -191,7 +191,7 @@ class _MyUsersState extends State<MyUsers> {
                         const Padding(
                           padding: EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(
-                            'Developer',
+                            'Development Team',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,

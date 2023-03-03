@@ -81,22 +81,27 @@ class _MyPmLoginState extends State<MyPmLogin> {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/background.png"),
+              image: AssetImage("assets/images/bg.png"),
               fit: BoxFit.cover,
             ),
           ),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.26),
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 80,
+                  child: Lottie.asset('assets/animations/pm.json'),
+                ),
                 // Welcome
                 const Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text(
                     'Welcome Project Manager',
                     style: TextStyle(
                       fontFamily: 'fontOne',
-                      fontSize: 36,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
@@ -105,21 +110,18 @@ class _MyPmLoginState extends State<MyPmLogin> {
 
                 // title
                 const Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text(
                     'Login to continue',
                     style: TextStyle(
                       fontFamily: 'fontOne',
-                      fontSize: 28,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Color(0xff0101D3),
                     ),
                   ),
                 ),
-                SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    child: Lottie.asset(
-                        'assets/animations/welcome_animation.json')),
+                const SizedBox(height: 60.0),
                 // username
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
