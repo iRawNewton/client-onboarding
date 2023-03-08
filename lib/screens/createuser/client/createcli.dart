@@ -16,6 +16,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
   final cliName = TextEditingController();
   final cliEmail = TextEditingController();
   final cliPhone = TextEditingController();
+  final cliDesignation = TextEditingController();
   dynamic data;
 
   postData(context) async {
@@ -28,6 +29,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
           'cli_name': cliName.text,
           'cli_email': cliEmail.text,
           'cli_phone': cliPhone.text,
+          'cli_designation': 'client',
         });
     if (response.statusCode == 200) {
       cliId.clear();
@@ -35,6 +37,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
       cliName.clear();
       cliEmail.clear();
       cliPhone.clear();
+      cliDesignation.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -180,6 +183,26 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Phone',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: TextField(
+                        controller: cliDesignation,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Designation',
                         ),
                       ),
                     ),
