@@ -2,6 +2,7 @@ import 'package:client_onboarding_app/screens/3loginpage/developer/login.dart';
 import 'package:client_onboarding_app/screens/3loginpage/client/login.dart';
 import 'package:client_onboarding_app/screens/3loginpage/pm/login.dart';
 import 'package:client_onboarding_app/screens/dashboard/client/client_dash.dart';
+import 'package:client_onboarding_app/screens/dashboard/pm/pm_dashboard.dart';
 import 'package:client_onboarding_app/screens/navigation/developer/dev_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 var checkDevId = '';
 var clientID = '';
+var pmId = '';
 
 class MyUsers extends StatefulWidget {
   const MyUsers({super.key});
@@ -22,9 +24,11 @@ class _MyUsersState extends State<MyUsers> {
   Future devValidationData() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
+    var pmid = sharedPreferences.getString('pmId');
     var developerId = sharedPreferences.getString('devId');
     var clientId = sharedPreferences.getString('cliId');
     setState(() {
+      pmId = pmid!;
       checkDevId = developerId!;
       clientID = clientId!;
     });
@@ -75,10 +79,21 @@ class _MyUsersState extends State<MyUsers> {
                 const SizedBox(height: 20.0),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MyPmLogin()));
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const MyPmLogin(),
+                    //   ),
+                    // );
+
+                    devValidationData().whenComplete(() async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => pmId == ''
+                                  ? const MyPmLogin()
+                                  : const MyPmDashboard()));
+                    });
                   },
                   child: Card(
                     margin: const EdgeInsets.symmetric(

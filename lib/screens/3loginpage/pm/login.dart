@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:client_onboarding_app/screens/navigation/pm/pm_navigation.dart';
+import 'package:client_onboarding_app/screens/dashboard/pm/pm_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyPmLogin extends StatefulWidget {
   const MyPmLogin({super.key});
@@ -44,11 +45,21 @@ class _MyPmLoginState extends State<MyPmLogin> {
             content: Text('Login Successful!'),
           ),
         );
-        Timer(const Duration(seconds: 1), () {
+        Timer(const Duration(seconds: 1), () async {
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => const MyPmNavigation(),
+          //   ),
+          // );
+          // shared prefs
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setString("pmId", data[0]['id']);
+          pref.setString("pmname", data[0]['cli_name']);
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const MyPmNavigation(),
+              builder: (context) => const MyPmDashboard(),
             ),
           );
         });

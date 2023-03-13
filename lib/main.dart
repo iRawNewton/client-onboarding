@@ -1,4 +1,4 @@
-import 'package:client_onboarding_app/screens/1getstarted/getstarted.dart';
+import 'package:client_onboarding_app/getstarted/getstarted.dart';
 import 'package:flutter/material.dart';
 
 void main() async {

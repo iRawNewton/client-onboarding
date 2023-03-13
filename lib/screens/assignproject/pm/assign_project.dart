@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:client_onboarding_app/screens/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -120,8 +121,7 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text('Create Project'),
+          title: const Text('Kyptronix Projects'),
           centerTitle: true,
         ),
         body: Container(
@@ -129,6 +129,38 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                // search
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(hintText: 'Search'),
+                        ),
+                      ),
+                      ElevatedButton.icon(
+                          onPressed: () {},
+                          icon: const Icon(Icons.search),
+                          label: const Text('Search'))
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                const Divider(),
+                // const SizedBox(height: 10.0),
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                        onPressed: () {
+                          projectName.clear();
+                          projectDesc.clear();
+                          dateControllerStart.clear();
+                          dateControllerEnd.clear();
+                          projectClientID.clear();
+                          projectDevId.clear();
+                        },
+                        icon: const Icon(Icons.cancel))),
                 // project name
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -306,23 +338,77 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                 const SizedBox(height: 10),
                 // ***********
                 const SizedBox(height: 40),
-                SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width * 0.75,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      postData(context);
-                    },
-                    style: const ButtonStyle(
-                        backgroundColor:
-                            MaterialStatePropertyAll(Color(0xff0101D3))),
-                    child: const Text(
-                      'Save',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        fontFamily: 'fontTwo',
+                Visibility(
+                  visible: false,
+                  replacement: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                          height: 40,
+                          width: MediaQuery.of(context).size.width * 0.44,
+                          child: ElevatedButton.icon(
+                              onPressed: () {
+                                postData(context);
+                              },
+                              icon: const Icon(
+                                Icons.update,
+                                // color: Colors.white,
+                              ),
+                              // style: const ButtonStyle(
+                              //     backgroundColor: MaterialStatePropertyAll(
+                              //         Color(0xff0101D3))),
+                              label: const Text(
+                                'Update',
+                                style: TextStyle(
+                                  // color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  fontFamily: 'fontTwo',
+                                ),
+                              ))),
+                      SizedBox(
+                          height: 40,
+                          width: MediaQuery.of(context).size.width * 0.44,
+                          child: ElevatedButton.icon(
+                              onPressed: () {
+                                postData(context);
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                // color: Colors.white,
+                              ),
+                              // style: const ButtonStyle(
+                              //     backgroundColor: MaterialStatePropertyAll(
+                              //         Color(0xff0101D3))),
+                              label: const Text(
+                                'Delete',
+                                style: TextStyle(
+                                  // color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  fontFamily: 'fontTwo',
+                                ),
+                              ))),
+                    ],
+                  ),
+                  child: SizedBox(
+                    height: 40,
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        postData(context);
+                      },
+                      style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Color(0xff0101D3))),
+                      child: const Text(
+                        'Save',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          fontFamily: 'fontTwo',
+                        ),
                       ),
                     ),
                   ),
@@ -331,6 +417,7 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
             ),
           ),
         ),
+        drawer: const MyDrawerInfo(),
       ),
     );
   }

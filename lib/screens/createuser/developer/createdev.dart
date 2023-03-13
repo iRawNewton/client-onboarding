@@ -1,3 +1,4 @@
+import 'package:client_onboarding_app/screens/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,6 +15,7 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
   final fullname = TextEditingController();
   final phone = TextEditingController();
   final email = TextEditingController();
+  final designation = TextEditingController();
 
   postData(context) async {
     var response = await http.post(
@@ -25,6 +27,7 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
           'cli_name': fullname.text,
           'cli_phone': phone.text,
           'cli_email': email.text,
+          // TODO: to add designation
         });
 
     if (response.statusCode == 200) {
@@ -33,6 +36,7 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
       fullname.clear();
       phone.clear();
       email.clear();
+      designation.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -55,13 +59,45 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Create New Dev Account'),
+          title: const Text('Kyptronix Development Team'),
           centerTitle: true,
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
           child: Column(
             children: [
+              // search
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  children: [
+                    const Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(hintText: 'Search'),
+                      ),
+                    ),
+                    ElevatedButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(Icons.search),
+                        label: const Text('Search'))
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20.0),
+              const Divider(),
+              // const SizedBox(height: 10.0),
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                      onPressed: () {
+                        username.clear();
+                        password.clear();
+                        fullname.clear();
+                        phone.clear();
+                        email.clear();
+                        designation.clear();
+                      },
+                      icon: const Icon(Icons.cancel))),
               // username
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -171,25 +207,101 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
                   ),
                 ),
               ),
+              // designation
+              const SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: designation,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Designation',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               // elevatedbutton
               const SizedBox(height: 50),
-              SizedBox(
-                height: 40,
-                width: MediaQuery.of(context).size.width * 0.75,
-                child: ElevatedButton(
-                  onPressed: () {
-                    postData(context);
-                  },
-                  style: const ButtonStyle(
-                      backgroundColor:
-                          MaterialStatePropertyAll(Color(0xff0101D3))),
-                  child: const Text(
-                    'Save',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      fontFamily: 'fontTwo',
+              Visibility(
+                visible: false,
+                replacement: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width * 0.44,
+                        child: ElevatedButton.icon(
+                            onPressed: () {
+                              // postData(context);
+                            },
+                            icon: const Icon(
+                              Icons.update,
+                              // color: Colors.white,
+                            ),
+                            // style: const ButtonStyle(
+                            //     backgroundColor: MaterialStatePropertyAll(
+                            //         Color(0xff0101D3))),
+                            label: const Text(
+                              'Update',
+                              style: TextStyle(
+                                // color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                fontFamily: 'fontTwo',
+                              ),
+                            ))),
+                    SizedBox(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width * 0.44,
+                        child: ElevatedButton.icon(
+                            onPressed: () {
+                              // postData(context);
+                            },
+                            icon: const Icon(
+                              Icons.delete,
+                              // color: Colors.white,
+                            ),
+                            // style: const ButtonStyle(
+                            //     backgroundColor: MaterialStatePropertyAll(
+                            //         Color(0xff0101D3))),
+                            label: const Text(
+                              'Delete',
+                              style: TextStyle(
+                                // color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                fontFamily: 'fontTwo',
+                              ),
+                            ))),
+                  ],
+                ),
+                child: SizedBox(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      postData(context);
+                    },
+                    style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(Color(0xff0101D3))),
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontFamily: 'fontTwo',
+                      ),
                     ),
                   ),
                 ),
@@ -197,6 +309,7 @@ class _MyDevNewUserState extends State<MyDevNewUser> {
             ],
           ),
         ),
+        drawer: const MyDrawerInfo(),
       ),
     );
   }

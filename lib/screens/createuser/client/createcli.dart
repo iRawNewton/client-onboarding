@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:client_onboarding_app/screens/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,6 +13,7 @@ class MyPmCreateClient extends StatefulWidget {
 
 class _MyPmCreateClientState extends State<MyPmCreateClient> {
   var maxlengthline = 10;
+  bool isVisible = true;
 
   final cliId = TextEditingController();
   final cliPass = TextEditingController();
@@ -17,6 +21,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
   final cliEmail = TextEditingController();
   final cliPhone = TextEditingController();
   final cliDesignation = TextEditingController();
+  final searchValue = TextEditingController();
   dynamic data;
 
   postData(context) async {
@@ -55,6 +60,33 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
     }
   }
 
+  searchData(context) async {
+    var response = await http.post(
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/client/searchClient.php'),
+        body: {
+          // 'queryvalue': searchValue.text,
+          'queryvalue': '1',
+        });
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body);
+      print(data[0]['id']);
+      cliId.text = data[1]['id'];
+      cliPass.text = '';
+      cliName.text = '';
+      cliEmail.text = '';
+      cliPhone.text = '';
+      cliDesignation.text = '';
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Nouser!'),
+        ),
+      );
+    }
+  }
+
   @override
   void dispose() {
     cliId.dispose();
@@ -69,26 +101,55 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Kyptronix Client Account'),
+          centerTitle: true,
+        ),
         body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Container(
-                    height: 60.0,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 5.0, vertical: 10.0),
-                    decoration: const BoxDecoration(color: Colors.transparent),
-                    child: const Center(
-                        child: Text(
-                      'Create New Client Account',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ))),
-                const SizedBox(height: 10),
+                // search
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(hintText: 'Search'),
+                        ),
+                      ),
+                      ElevatedButton.icon(
+                          onPressed: () {
+                            searchData(context);
+                            setState(() {
+                              isVisible = !isVisible;
+                            });
+                          },
+                          icon: const Icon(Icons.search),
+                          label: const Text('Search'))
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                const Divider(),
+                // const SizedBox(height: 10.0),
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                        onPressed: () {
+                          cliId.clear();
+                          cliPass.clear();
+                          cliName.clear();
+                          cliEmail.clear();
+                          cliPhone.clear();
+                          cliDesignation.clear();
+                        },
+                        icon: const Icon(Icons.cancel))),
                 // client ID
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -110,7 +171,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                 ),
                 const SizedBox(height: 10.0),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -130,7 +191,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                 ),
                 const SizedBox(height: 10.0),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -150,7 +211,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                 ),
                 const SizedBox(height: 10.0),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -170,7 +231,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                 ),
                 const SizedBox(height: 10.0),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -190,7 +251,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                 ),
                 const SizedBox(height: 10.0),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -210,23 +271,77 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                 ),
                 const SizedBox(height: 20.0),
 
-                SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width * 0.75,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      postData(context);
-                    },
-                    style: const ButtonStyle(
-                        backgroundColor:
-                            MaterialStatePropertyAll(Color(0xff0101D3))),
-                    child: const Text(
-                      'Create client account',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        fontFamily: 'fontTwo',
+                Visibility(
+                  visible: isVisible,
+                  replacement: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                          height: 40,
+                          width: MediaQuery.of(context).size.width * 0.44,
+                          child: ElevatedButton.icon(
+                              onPressed: () {
+                                // postData(context);
+                              },
+                              icon: const Icon(
+                                Icons.update,
+                                // color: Colors.white,
+                              ),
+                              // style: const ButtonStyle(
+                              //     backgroundColor: MaterialStatePropertyAll(
+                              //         Color(0xff0101D3))),
+                              label: const Text(
+                                'Update',
+                                style: TextStyle(
+                                  // color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  fontFamily: 'fontTwo',
+                                ),
+                              ))),
+                      SizedBox(
+                          height: 40,
+                          width: MediaQuery.of(context).size.width * 0.44,
+                          child: ElevatedButton.icon(
+                              onPressed: () {
+                                // postData(context);
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                // color: Colors.white,
+                              ),
+                              // style: const ButtonStyle(
+                              //     backgroundColor: MaterialStatePropertyAll(
+                              //         Color(0xff0101D3))),
+                              label: const Text(
+                                'Delete',
+                                style: TextStyle(
+                                  // color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  fontFamily: 'fontTwo',
+                                ),
+                              ))),
+                    ],
+                  ),
+                  child: SizedBox(
+                    height: 40,
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        postData(context);
+                      },
+                      style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Color(0xff0101D3))),
+                      child: const Text(
+                        'Create client account',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          fontFamily: 'fontTwo',
+                        ),
                       ),
                     ),
                   ),
@@ -235,6 +350,7 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
             ),
           ),
         ),
+        drawer: const MyDrawerInfo(),
       ),
     );
   }
