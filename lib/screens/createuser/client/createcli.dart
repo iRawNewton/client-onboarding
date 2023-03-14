@@ -14,7 +14,7 @@ class MyPmCreateClient extends StatefulWidget {
 class _MyPmCreateClientState extends State<MyPmCreateClient> {
   var maxlengthline = 10;
   bool isVisible = true;
-
+  final id = TextEditingController();
   final cliId = TextEditingController();
   final cliPass = TextEditingController();
   final cliName = TextEditingController();
@@ -65,23 +65,92 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
         Uri.parse(
             'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/client/searchClient.php'),
         body: {
-          // 'queryvalue': searchValue.text,
-          'queryvalue': '1',
+          'queryvalue': searchValue.text,
+          // 'queryvalue': '1',
         });
     if (response.statusCode == 200) {
       data = jsonDecode(response.body);
-      print(data[0]['id']);
-      cliId.text = data[1]['id'];
-      cliPass.text = '';
-      cliName.text = '';
-      cliEmail.text = '';
-      cliPhone.text = '';
-      cliDesignation.text = '';
+      id.text = data[0]['id'].toString();
+      cliId.text = data[0]['cli_userid'].toString();
+      cliPass.text = data[0]['cli_pass'].toString();
+      cliName.text = data[0]['cli_name'].toString();
+      cliEmail.text = data[0]['cli_email'].toString();
+      cliPhone.text = data[0]['cli_phone'].toString();
+      cliDesignation.text = data[0]['cli_designation'].toString();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: Colors.red,
-          content: Text('Nouser!'),
+          content: Text('No user!'),
+        ),
+      );
+    }
+  }
+
+  updateData(context) async {
+    var response = await http.post(
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/client/updateClient.php'),
+        body: {
+          'id': id.text,
+          'cli_userid': cliId.text,
+          'cli_pass': cliPass.text,
+          'cli_name': cliName.text,
+          'cli_email': cliEmail.text,
+          'cli_phone': cliPhone.text,
+        });
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text('Success!'),
+        ),
+      );
+
+      cliId.clear();
+      cliPass.clear();
+      cliName.clear();
+      cliEmail.clear();
+      cliPhone.clear();
+      cliDesignation.clear();
+      searchValue.clear();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Error!'),
+        ),
+      );
+    }
+  }
+
+  deleteData(context) async {
+    var response = await http.post(
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/client/deleteClient.php'),
+        body: {
+          'id': id.text,
+        });
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text('Success!'),
+        ),
+      );
+
+      cliId.clear();
+      cliPass.clear();
+      cliName.clear();
+      cliEmail.clear();
+      cliPhone.clear();
+      cliDesignation.clear();
+      searchValue.clear();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Error!'),
         ),
       );
     }
@@ -115,16 +184,17 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: TextField(
-                          decoration: InputDecoration(hintText: 'Search'),
+                          controller: searchValue,
+                          decoration: const InputDecoration(hintText: 'Search'),
                         ),
                       ),
                       ElevatedButton.icon(
                           onPressed: () {
                             searchData(context);
                             setState(() {
-                              isVisible = !isVisible;
+                              isVisible = false;
                             });
                           },
                           icon: const Icon(Icons.search),
@@ -145,6 +215,9 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                           cliEmail.clear();
                           cliPhone.clear();
                           cliDesignation.clear();
+                          setState(() {
+                            isVisible = true;
+                          });
                         },
                         icon: const Icon(Icons.cancel))),
                 // client ID
@@ -281,6 +354,11 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                           width: MediaQuery.of(context).size.width * 0.44,
                           child: ElevatedButton.icon(
                               onPressed: () {
+                                setState(() {
+                                  isVisible = true;
+                                });
+                                updateData(context);
+
                                 // postData(context);
                               },
                               icon: const Icon(
@@ -304,6 +382,10 @@ class _MyPmCreateClientState extends State<MyPmCreateClient> {
                           width: MediaQuery.of(context).size.width * 0.44,
                           child: ElevatedButton.icon(
                               onPressed: () {
+                                deleteData(context);
+                                setState(() {
+                                  isVisible = true;
+                                });
                                 // postData(context);
                               },
                               icon: const Icon(

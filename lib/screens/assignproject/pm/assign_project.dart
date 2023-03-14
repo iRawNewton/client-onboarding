@@ -19,6 +19,9 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
   var dateControllerEnd = TextEditingController();
   TextEditingController projectClientID = TextEditingController();
   TextEditingController projectDevId = TextEditingController();
+  final searchValue = TextEditingController();
+  bool isVisible = true;
+  dynamic data;
 
   DateTime date = DateTime.now();
 
@@ -54,6 +57,106 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
           'proj_enddate': dateControllerEnd.text,
           'proj_cli_id': projectClientID.text,
           'proj_dev_id': projectDevId.text,
+        });
+
+    if (response.statusCode == 200) {
+      projectName.clear();
+      projectDesc.clear();
+      dateControllerStart.clear();
+      dateControllerEnd.clear();
+      projectClientID.clear();
+      projectDevId.clear();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text('Success!'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Error!'),
+        ),
+      );
+    }
+  }
+
+  searchData(context) async {
+    var response = await http.post(
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/project/searchProject.php'),
+        body: {
+          'searchValue': searchValue.text,
+        });
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body);
+      searchValue.text = data[0]['id'].toString();
+      projectName.text = data[0]['proj_name'].toString();
+      projectDesc.text = data[0]['proj_desc'].toString();
+      dateControllerStart.text = data[0]['proj_startdate'].toString();
+      dateControllerEnd.text = data[0]['proj_enddate'].toString();
+      setState(() {
+        dropdownvalue1 = data[0]['proj_cli_id'].toString();
+        projectDevId.text = data[0]['proj_cli_id'].toString();
+        dropdownvalue2 = data[0]['proj_dev_id'].toString();
+        projectClientID.text = data[0]['proj_dev_id'].toString();
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Error!'),
+        ),
+      );
+    }
+  }
+
+  updateData(context) async {
+    var response = await http.post(
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/project/updateProject.php'),
+        body: {
+          'searchValue': searchValue.text,
+          'proj_name': projectName.text,
+          'proj_desc': projectDesc.text,
+          'proj_startdate': dateControllerStart.text,
+          'proj_enddate': dateControllerEnd.text,
+          'proj_cli_id': projectClientID.text,
+          'proj_dev_id': projectDevId.text,
+        });
+
+    if (response.statusCode == 200) {
+      projectName.clear();
+      projectDesc.clear();
+      dateControllerStart.clear();
+      dateControllerEnd.clear();
+      projectClientID.clear();
+      projectDevId.clear();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text('Success!'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Error!'),
+        ),
+      );
+    }
+  }
+
+  deleteData(context) async {
+    var response = await http.post(
+        Uri.parse(
+            'https://acp.cwy.mybluehostin.me/demo/gaurabroy/FlutterApi/project/deleteProject.php'),
+        body: {
+          'searchValue': searchValue.text,
         });
 
     if (response.statusCode == 200) {
@@ -134,13 +237,19 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: TextField(
-                          decoration: InputDecoration(hintText: 'Search'),
+                          controller: searchValue,
+                          decoration: const InputDecoration(hintText: 'Search'),
                         ),
                       ),
                       ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            searchData(context);
+                            setState(() {
+                              isVisible = false;
+                            });
+                          },
                           icon: const Icon(Icons.search),
                           label: const Text('Search'))
                     ],
@@ -157,8 +266,6 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                           projectDesc.clear();
                           dateControllerStart.clear();
                           dateControllerEnd.clear();
-                          projectClientID.clear();
-                          projectDevId.clear();
                         },
                         icon: const Icon(Icons.cancel))),
                 // project name
@@ -335,7 +442,11 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                // const SizedBox(height: 10),
+                const Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                        'Please tap once in both the client and developer field')),
                 // ***********
                 const SizedBox(height: 40),
                 Visibility(
@@ -348,7 +459,10 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                           width: MediaQuery.of(context).size.width * 0.44,
                           child: ElevatedButton.icon(
                               onPressed: () {
-                                postData(context);
+                                updateData(context);
+                                setState(() {
+                                  isVisible = true;
+                                });
                               },
                               icon: const Icon(
                                 Icons.update,
@@ -371,7 +485,10 @@ class _MyProjectDetailsState extends State<MyProjectDetails> {
                           width: MediaQuery.of(context).size.width * 0.44,
                           child: ElevatedButton.icon(
                               onPressed: () {
-                                postData(context);
+                                deleteData(context);
+                                setState(() {
+                                  isVisible = true;
+                                });
                               },
                               icon: const Icon(
                                 Icons.delete,
